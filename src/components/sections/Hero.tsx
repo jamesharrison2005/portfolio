@@ -14,7 +14,7 @@ function Hero() {
             James
           </h1>
           <p className="mt-5 text-lg leading-relaxed text-saddle-brown-500 sm:text-xl dark:text-camel-900">
-            I design and build thoughtful web experiences with React, TypeScript, and Tailwind CSS.
+            Building robust digital experiences and uncovering the stories hidden within data.
           </p>
           <div className="mt-8 flex justify-center md:justify-start">
             <a
@@ -28,7 +28,7 @@ function Hero() {
 
         <div className="flex justify-center md:justify-end">
           <div className="relative h-72 w-72 sm:h-80 sm:w-80 lg:h-96 lg:w-96">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-camel-700 via-dry-sage-alt-800 to-dark-walnut-500 opacity-90 blur-2xl dark:from-ebony-600 dark:via-dusty-olive-600 dark:to-dark-walnut-300" />
+            <div className="absolute inset-0 rounded-full bg-linear-to-br from-camel-700 via-dry-sage-alt-800 to-dark-walnut-500 opacity-90 blur-2xl dark:from-ebony-600 dark:via-dusty-olive-600 dark:to-dark-walnut-300" />
             <div className="relative h-full w-full overflow-hidden rounded-full border-4 border-khaki-beige-900/80 shadow-lg dark:border-ebony-300/80">
               <img
                 src={profileImage}
