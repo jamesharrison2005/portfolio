@@ -7,8 +7,8 @@ import ScrollReveal from './components/ui/ScrollReveal';
 const contacts = [
   {
     label: 'Email',
-    href: 'mailto:email@example.com',
-    value: 'email@example.com',
+    href: 'mailto:jamesharrison2262@gmail.com',
+    value: 'jamesharrison2262@gmail.com',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
         <path d="M4 6h16v12H4z" />
@@ -18,8 +18,8 @@ const contacts = [
   },
   {
     label: 'GitHub',
-    href: 'https://github.com/yourname',
-    value: 'github.com/yourname',
+    href: 'https://github.com/jamesharrison2005',
+    value: 'github.com/jamesharrison2005',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
         <path d="M9 19c-4.5 1.5-4.5-2-6-2" />
@@ -29,8 +29,8 @@ const contacts = [
   },
   {
     label: 'LinkedIn',
-    href: 'https://linkedin.com/in/yourname',
-    value: 'linkedin.com/in/yourname',
+    href: 'https://www.linkedin.com/in/james-harrison-8440a730a/',
+    value: 'linkedin.com/in/james-harrison',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
         <path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 1 0-4 0v6h-4V8h4v2" />
@@ -45,7 +45,7 @@ function App() {
   return (
     <div
       id="top"
-      className="min-h-screen bg-gradient-to-b from-khaki-beige-900 via-dry-sage-alt-900 to-camel-800 text-charcoal-brown-500 dark:from-charcoal-brown-200 dark:via-ebony-300 dark:to-dark-walnut-200 dark:text-khaki-beige-800"
+      className="min-h-screen bg-linear-to-b from-khaki-beige-900 via-dry-sage-alt-900 to-camel-800 text-charcoal-brown-500 dark:from-charcoal-brown-200 dark:via-ebony-300 dark:to-dark-walnut-200 dark:text-khaki-beige-800"
     >
       <main className="mx-auto flex max-w-5xl flex-col gap-16 px-6 py-6 sm:py-8 lg:py-10">
         <Navbar />

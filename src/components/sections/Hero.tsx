@@ -1,4 +1,4 @@
-import profileImage from '../../assets/profile-portrait.svg';
+import profileImage from '../../assets/portrait.png';
 import ScrollReveal from '../ui/ScrollReveal';
 
 function Hero() {
@@ -8,7 +8,7 @@ function Hero() {
         <div className="flex flex-col items-center gap-10 md:flex-row md:items-center md:justify-between">
         <div className="max-w-xl text-center md:text-left">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
-            Software Engineer
+            Computer Scientist
           </p>
           <h1 className="text-5xl font-bold tracking-tight text-dark-walnut-500 sm:text-6xl lg:text-7xl dark:text-khaki-beige-900">
             James
