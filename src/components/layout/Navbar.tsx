@@ -31,7 +31,7 @@ function Navbar() {
     <header className="sticky top-0 z-50 border-b border-camel-600/40 bg-khaki-beige-900/80 backdrop-blur dark:border-ebony-600/50 dark:bg-charcoal-brown-200/80">
       <nav className="flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:justify-between">
         <a href="#top" className="text-lg font-semibold tracking-tight text-dark-walnut-500 transition hover:text-toffee-brown-500 dark:text-khaki-beige-900 dark:hover:text-khaki-beige-700">
-          James Portfolio
+          James Harrison
         </a>
         <div className="flex flex-col gap-3 text-sm font-medium text-saddle-brown-500 dark:text-dry-sage-alt-800 sm:flex-row sm:items-center sm:gap-4">
           <button
