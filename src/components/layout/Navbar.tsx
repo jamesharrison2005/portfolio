@@ -28,16 +28,16 @@ function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-camel-600/40 bg-khaki-beige-900/75 py-4 backdrop-blur dark:border-ebony-600/50 dark:bg-charcoal-brown-200/75">
-      <nav className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <a href="#top" className="text-lg font-semibold tracking-tight text-dark-walnut-500 dark:text-khaki-beige-900">
+    <header className="sticky top-0 z-50 border-b border-camel-600/40 bg-khaki-beige-900/80 backdrop-blur dark:border-ebony-600/50 dark:bg-charcoal-brown-200/80">
+      <nav className="flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <a href="#top" className="text-lg font-semibold tracking-tight text-dark-walnut-500 transition hover:text-toffee-brown-500 dark:text-khaki-beige-900 dark:hover:text-khaki-beige-700">
           James Portfolio
         </a>
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4 text-sm font-medium text-saddle-brown-500 dark:text-dry-sage-alt-800">
+        <div className="flex flex-col gap-3 text-sm font-medium text-saddle-brown-500 dark:text-dry-sage-alt-800 sm:flex-row sm:items-center sm:gap-4">
           <button
             type="button"
             onClick={toggleTheme}
-            className="rounded-full border border-toffee-brown-400/50 bg-khaki-beige-800 px-3 py-1.5 text-xs font-semibold tracking-wide text-saddle-brown-500 transition hover:bg-camel-700 dark:border-dry-sage-alt-600 dark:bg-ebony-400 dark:text-khaki-beige-900 dark:hover:bg-ebony-500"
+            className="rounded-full border border-toffee-brown-400/50 bg-khaki-beige-800 px-3 py-1.5 text-xs font-semibold tracking-wide text-saddle-brown-500 shadow-sm transition hover:-translate-y-0.5 hover:bg-camel-700/80 hover:shadow-md dark:border-dry-sage-alt-600 dark:bg-ebony-400 dark:text-khaki-beige-900 dark:hover:bg-ebony-500"
             aria-label="Toggle color mode"
           >
             {isDarkMode ? 'Light mode' : 'Dark mode'}
@@ -47,7 +47,7 @@ function Navbar() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="rounded px-2 py-1 transition hover:bg-camel-700/60 dark:hover:bg-ebony-500/80"
+                  className="rounded-full px-3 py-1.5 transition hover:bg-camel-700/60 hover:text-dark-walnut-500 dark:hover:bg-ebony-500/80 dark:hover:text-khaki-beige-900"
                 >
                   {link.label}
                 </a>

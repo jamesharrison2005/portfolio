@@ -1,9 +1,12 @@
+import ScrollReveal from '../ui/ScrollReveal';
+
 function About() {
   const skills = ['React', 'TypeScript', 'Tailwind CSS', 'JavaScript', 'Accessibility', 'UI Design'];
 
   return (
-    <section id="about" className="py-12">
-      <div className="grid gap-8 md:grid-cols-2 md:items-start">
+    <section id="about" className="rounded-3xl border border-camel-600/40 bg-khaki-beige-800/50 p-6 shadow-sm sm:p-8 dark:border-ebony-600 dark:bg-charcoal-brown-300/80 md:p-10">
+      <ScrollReveal>
+        <div className="grid gap-8 md:grid-cols-2 md:items-start">
         <div>
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
             About
@@ -18,7 +21,7 @@ function About() {
           </p>
         </div>
 
-        <div className="rounded-3xl border border-camel-600/50 bg-khaki-beige-800/70 p-6 shadow-sm dark:border-ebony-600 dark:bg-charcoal-brown-300/90">
+        <div className="rounded-3xl border border-camel-600/50 bg-khaki-beige-900/60 p-6 shadow-sm dark:border-ebony-600 dark:bg-charcoal-brown-200/80">
           <h3 className="mb-4 text-lg font-semibold text-dark-walnut-500 dark:text-khaki-beige-900">
             Skills
           </h3>
@@ -33,7 +36,8 @@ function About() {
             ))}
           </div>
         </div>
-      </div>
+        </div>
+      </ScrollReveal>
     </section>
   );
 }
