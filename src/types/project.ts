@@ -1,7 +1,8 @@
 export type Project = {
+  image: string;
   title: string;
   description: string;
   tech: string[];
-  repoUrl?: string;
+  githubUrl?: string;
   liveUrl?: string;
 };

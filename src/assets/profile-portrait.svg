@@ -1,0 +1,27 @@
+<svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="800" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f0efe9"/>
+      <stop offset="0.45" stop-color="#d3cebc"/>
+      <stop offset="1" stop-color="#a68a64"/>
+    </linearGradient>
+    <linearGradient id="hair" x1="220" y1="160" x2="560" y2="520" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#582f0e"/>
+      <stop offset="1" stop-color="#333d29"/>
+    </linearGradient>
+    <linearGradient id="shirt" x1="250" y1="470" x2="550" y2="760" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#656d4a"/>
+      <stop offset="1" stop-color="#414833"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="800" rx="400" fill="url(#bg)"/>
+  <circle cx="400" cy="320" r="150" fill="#f4d3b8"/>
+  <path d="M255 315C255 223 318 160 400 160C482 160 545 223 545 315C545 375 520 420 500 448C485 468 470 484 450 494C428 505 374 505 350 494C330 484 315 468 300 448C280 420 255 375 255 315Z" fill="url(#hair)"/>
+  <path d="M280 305C280 252 320 214 400 214C480 214 520 252 520 305C520 345 505 378 483 402C466 421 442 440 400 440C358 440 334 421 317 402C295 378 280 345 280 305Z" fill="#f4d3b8"/>
+  <circle cx="350" cy="320" r="14" fill="#333d29"/>
+  <circle cx="450" cy="320" r="14" fill="#333d29"/>
+  <path d="M345 368C365 388 435 388 455 368" stroke="#7f4f24" stroke-width="12" stroke-linecap="round"/>
+  <path d="M240 675C255 595 315 525 400 525C485 525 545 595 560 675V800H240V675Z" fill="url(#shirt)"/>
+  <path d="M335 520L400 590L465 520L550 580L500 800H300L250 580L335 520Z" fill="#b6ad90"/>
+  <path d="M260 700C300 650 340 630 400 630C460 630 500 650 540 700" stroke="#ede8e0" stroke-width="10" stroke-linecap="round"/>
+</svg>
