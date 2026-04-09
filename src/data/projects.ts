@@ -11,7 +11,6 @@ export const projects: Project[] = [
     description: 'A personal site to showcase projects, skills, and contact info.',
     tech: ['React', 'TypeScript', 'Tailwind CSS', 'Vite', 'Git/GitHub'],
     githubUrl: 'https://github.com/jamesharrison2005/portfolio',
-    liveUrl: 'https://your-portfolio.example.com',
   },
   {
     category: 'software-development',
@@ -20,7 +19,6 @@ export const projects: Project[] = [
     description: 'A lightweight app proving barcode and text scanning to identify allergens in a large set of products',
     tech: ['Flutter', 'Dart', 'APIs', 'Firebase','SQL', 'Figma', 'UX Design', 'GitHub'],
     githubUrl: 'https://github.com/yourname/task-tracker',
-    liveUrl: 'https://your-task-tracker.example.com',
   },
     {
     category: 'software-development',
@@ -29,7 +27,6 @@ export const projects: Project[] = [
     description: 'Utilises NASA and OpenWeather APIs to parse, display and compare weather data',
     tech: ['Flutter', 'Dart', 'APIs', 'Firebase','UX Design', 'Product Evaluation', 'Github'],
     githubUrl: 'https://github.com/yourname/task-tracker',
-    liveUrl: 'https://your-task-tracker.example.com',
   },
   {
     category: 'data-science',
@@ -38,15 +35,22 @@ export const projects: Project[] = [
     description: 'An analysis on COVID-19 dataset and its world-wide prevalence',
     tech: ['Google Colab', 'Python', 'Pandas', 'NumPy', 'MatplotLib'],
     githubUrl: 'https://github.com/jamesharrison2005/Analysis-on-the-Prevalence-of-Covid-19',
-    liveUrl: 'https://your-weather-dashboard.example.com',
+    
   },
     {
     category: 'data-science',
     image: weatherPreview,
     title: 'Top IMDB Movie Analysis and Prediction',
     description: 'An analysis on the 1000 top IMDB movies and predicting which features contribute the highest succes rates',
-    tech: ['Google Colab', 'Python', 'Pandas', 'NumPy', 'MatplotLib', ''],
-    githubUrl: 'https://github.com/jamesharrison2005/Analysis-on-the-Prevalence-of-Covid-19',
-    liveUrl: 'https://your-weather-dashboard.example.com',
+    tech: ['Google Colab', 'Python', 'Pandas', 'NumPy', 'MatplotLib', 'Sklearn'],
+    githubUrl: 'https://github.com/jamesharrison2005/IMDB-movie-feature-predictions',
+  },
+  {
+    category: 'other',
+    image: weatherPreview,
+    title: 'HTML-ICS calendar converter',
+    description: 'Developed a python parser which parsed university timetable html into an ics file for online calendars',
+    tech: ['Python', 'Python', 'BeautifulSoup',],
+    githubUrl: 'https://github.com/jamesharrison2005/Convert-Timetable-HTML--to-ICS',
   },
 ];
