@@ -5,6 +5,7 @@ import weatherPreview from '../assets/project-weather.svg';
 
 export const projects: Project[] = [
   {
+    category: 'software-development',
     image: portfolioPreview,
     title: 'Portfolio Website',
     description: 'A personal site to showcase projects, skills, and contact info.',
@@ -13,6 +14,7 @@ export const projects: Project[] = [
     liveUrl: 'https://your-portfolio.example.com',
   },
   {
+    category: 'software-development',
     image: taskTrackerPreview,
     title: 'Task Tracker App',
     description: 'A lightweight productivity app with categories and due dates.',
@@ -21,6 +23,7 @@ export const projects: Project[] = [
     liveUrl: 'https://your-task-tracker.example.com',
   },
   {
+    category: 'data-science',
     image: weatherPreview,
     title: 'Weather Dashboard',
     description: 'A weather app with search history and 5-day forecasts.',
