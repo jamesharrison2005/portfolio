@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import ScrollReveal from '../ui/ScrollReveal';
+import HikingGallery from '../ui/HikingGallery';
 
 function About() {
   const [isOpen, setIsOpen] = useState(true);
@@ -26,18 +27,24 @@ function About() {
       skills: [
         'React',
         'TypeScript',
-        'Tailwind CSS',
         'JavaScript',
-        'Accessibility',
-        'UI Design',
+        '.NET',
+        'Java',
         'Flutter',
         'Dart',
         'Firebase',
+        'Tailwind CSS',
+        'REST APIs',
+        'Git',
       ],
     },
     {
-      title: 'Data Science',
-      skills: ['Python', 'Pandas', 'Matplotlib', 'Seaborn', 'SQL', 'Excel', 'Kiras', 'Pytorch'],
+      title: 'Data & Analytics',
+      skills: ['Python', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'SQL', 'Excel', 'Keras', 'PyTorch'],
+    },
+    {
+      title: 'Working Style & Strengths',
+      skills: ['Problem Solving', 'Team Collaboration', 'UI Design', 'Accessibility', 'Testing & Debugging', 'Communication'],
     },
   ];
 
@@ -68,11 +75,16 @@ function About() {
             About Me
           </h2>
           <p className="max-w-xl wrap-break-word text-lg leading-8 text-saddle-brown-500 dark:text-camel-900">
-             I am a highly motivated student in my final year at the University of Lancashire from the Isle of Man, 
-             pursuing a career in Computer Science. With over 5 years of experience creating and designing applications. I have developed strong problem-solving and programming skills.
-               I thrive in team-based environments where I can collaborate with others to deliver the best possible 
-               solution. I aim to master my technical ability and widen my knowledge in the ever-evolving different fields of 
-               Computer Science.
+            I am a final-year Computer Science student at the University of Lancashire from the Isle of Man, focused
+            on becoming a software developer who can bridge application engineering and data-driven thinking. Over the
+            past five years, I have built experience across cross-platform app development, frontend engineering, and
+            core programming fundamentals.
+          </p>
+          <p className="mt-4 max-w-xl wrap-break-word text-lg leading-8 text-saddle-brown-500 dark:text-camel-900">
+            I enjoy building reliable, user-focused products with technologies such as React, TypeScript, Flutter,
+            and Firebase, while also using Python and SQL to analyze data and uncover practical insights. I work best
+            in collaborative teams where clear communication, problem-solving, and continuous learning lead to
+            stronger outcomes.
           </p>
 
         </div>
@@ -96,6 +108,31 @@ function About() {
             </div>
           ))}
         </div>
+          </div>
+
+          <div className="mt-8 min-w-0">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
+              Outside of Work
+            </p>
+            <h2 className="mb-4 text-4xl font-bold tracking-tight text-dark-walnut-500 sm:text-5xl dark:text-khaki-beige-900">
+              Life Beyond Code
+            </h2>
+            <p className="max-w-none wrap-break-word text-lg leading-8 text-saddle-brown-500 dark:text-camel-900">
+              Outside of software and data, I stay active and grounded through regular gym training, hiking, and long
+              walks with my dogs. These routines help me stay disciplined, focused, and consistent in both my personal
+              and professional life.
+            </p>
+            <h3 className="mt-6 text-2xl font-semibold tracking-tight text-dark-walnut-500 dark:text-khaki-beige-900">
+              Hiking
+            </h3>
+            <HikingGallery />
+            <h3 className="mt-6 text-2xl font-semibold tracking-tight text-dark-walnut-500 dark:text-khaki-beige-900">
+              Enjoying the Outdoors
+            </h3>
+            <p className="mt-3 max-w-none wrap-break-word text-lg leading-8 text-saddle-brown-500 dark:text-camel-900">
+              I also enjoy getting outdoors, exploring new places, and taking time to reset away from a screen. That
+              balance gives me fresh perspective and energy, which I bring back into the projects and teams I work on.
+            </p>
           </div>
         </div>
       </ScrollReveal>
