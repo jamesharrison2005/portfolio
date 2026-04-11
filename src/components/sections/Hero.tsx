@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useState, type ReactNode } from 'react';
+import { useRef, useState, type ReactNode } from 'react';
 import profileImage from '../../assets/portrait.png';
 import { projects } from '../../data/projects';
 import type { ProjectCategory } from '../../types/project';
@@ -66,6 +66,7 @@ function Hero() {
     other: false,
   });
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const workspaceRef = useRef<HTMLDivElement>(null);
 
   const skillGroups = [
     {
@@ -297,9 +298,15 @@ function Hero() {
         </button>
       </div>
 
+      <div
+        ref={workspaceRef}
+        className="fixed inset-x-0 bottom-0 z-0 pointer-events-none"
+        style={{ top: '5.5rem' }}
+      />
+
       <motion.div
         drag
-        dragConstraints={{ top: 0 }}
+        dragConstraints={workspaceRef}
         dragElastic={0.08}
         dragMomentum={false}
         className="fixed left-2 top-24 z-50 w-[calc(100vw-1rem)] cursor-grab active:cursor-grabbing sm:left-4 sm:top-28 sm:w-[calc(100vw-2rem)] lg:w-[min(1100px,calc(100vw-2rem))]"
