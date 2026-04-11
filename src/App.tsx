@@ -77,7 +77,7 @@ function App() {
             onClick={() => setIsContactOpen((prev) => !prev)}
             aria-expanded={isContactOpen}
             aria-controls="contact-content"
-            className="retro-window-bar w-full text-left transition hover:bg-camel-800/80 dark:hover:bg-ebony-500/80"
+            className="retro-window-bar w-full justify-start gap-3 text-left transition hover:bg-camel-800/80 dark:hover:bg-ebony-500/80"
           >
             <div className="flex items-center gap-2" aria-hidden="true">
               <span className={`h-3.5 w-3.5 rounded-full border ${isContactOpen ? 'border-red-800/80 bg-red-500/90 dark:border-red-300/80 dark:bg-red-400/90' : 'border-red-800/40 bg-red-500/30 dark:border-red-300/40 dark:bg-red-300/30'}`} />
