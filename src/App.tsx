@@ -47,17 +47,23 @@ function App() {
       id="top"
       className="min-h-screen bg-linear-to-b from-khaki-beige-900 via-dry-sage-alt-900 to-camel-800 text-charcoal-brown-500 dark:from-charcoal-brown-200 dark:via-ebony-300 dark:to-dark-walnut-200 dark:text-khaki-beige-800"
     >
-      <main className="mx-auto flex max-w-5xl flex-col gap-16 px-6 py-6 sm:py-8 lg:py-10">
+      <main className="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
         <Navbar />
         <Hero />
         <About />
         <Projects />
-        <section id="contact" className="rounded-3xl border border-camel-600/50 bg-khaki-beige-800/60 p-6 shadow-sm dark:border-ebony-600 dark:bg-charcoal-brown-300/80 sm:p-8">
+        <section id="contact" className="retro-window">
+          <div className="retro-window-bar">
+            <div className="retro-dots" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </div>
+            <span>contact.exe</span>
+          </div>
           <ScrollReveal>
-            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
-              Contact
-            </p>
-            <h2 className="mb-4 text-3xl font-bold tracking-tight text-dark-walnut-500 sm:text-4xl dark:text-khaki-beige-900">
+            <div className="p-6 sm:p-8">
+            <h2 className="mb-6 text-3xl font-semibold text-dark-walnut-500 sm:text-4xl dark:text-khaki-beige-900">
               Let&apos;s connect
             </h2>
             <div className="grid gap-4 sm:grid-cols-3">
@@ -67,9 +73,9 @@ function App() {
                   href={contact.href}
                   target={contact.label === 'Email' ? undefined : '_blank'}
                   rel={contact.label === 'Email' ? undefined : 'noreferrer'}
-                  className="group flex items-center gap-4 rounded-2xl border border-camel-600/60 bg-khaki-beige-800/80 p-4 transition duration-300 hover:-translate-y-1 hover:border-dark-walnut-500 hover:bg-khaki-beige-700/90 hover:shadow-md dark:border-ebony-600 dark:bg-charcoal-brown-300/90 dark:hover:border-khaki-beige-900 dark:hover:bg-ebony-500/70"
+                  className="group retro-button flex items-center gap-4 bg-khaki-beige-800/85 p-4 transition duration-200 hover:border-dark-walnut-500 hover:bg-khaki-beige-700/95 dark:bg-charcoal-brown-300/90 dark:hover:border-khaki-beige-900 dark:hover:bg-ebony-500/70"
                 >
-                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-dark-walnut-500 text-khaki-beige-900 transition group-hover:scale-105 group-hover:bg-toffee-brown-500 dark:bg-khaki-beige-900 dark:text-dark-walnut-500">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-none border border-dark-walnut-500/30 bg-dark-walnut-500 text-khaki-beige-900 transition group-hover:scale-105 group-hover:bg-toffee-brown-500 dark:border-khaki-beige-900/30 dark:bg-khaki-beige-900 dark:text-dark-walnut-500">
                     {contact.icon}
                   </div>
                   <div>
@@ -82,6 +88,7 @@ function App() {
                   </div>
                 </a>
               ))}
+            </div>
             </div>
           </ScrollReveal>
         </section>
