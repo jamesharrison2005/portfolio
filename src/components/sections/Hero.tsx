@@ -335,7 +335,7 @@ function Hero() {
           </div>
 
           <div className="p-4 sm:p-5 md:p-8">
-            <div className="retro-window flex min-h-0 flex-col overflow-hidden p-4 sm:p-5 md:p-8">
+            <div className="retro-window flex h-[calc(100vh-15rem)] min-h-80 flex-col overflow-y-auto overscroll-contain p-4 sm:h-[calc(100vh-16rem)] sm:p-5 md:h-[calc(100vh-17rem)] md:p-8">
               {renderPanel()}
             </div>
           </div>
