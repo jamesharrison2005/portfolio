@@ -25,8 +25,17 @@ function Projects() {
   };
 
   return (
-    <section id="projects" className="rounded-3xl border border-camel-600/40 bg-khaki-beige-800/50 p-6 shadow-sm sm:p-8 dark:border-ebony-600 dark:bg-charcoal-brown-300/80 md:p-10">
+    <section id="projects" className="retro-window">
+      <div className="retro-window-bar">
+        <div className="retro-dots" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
+        <span>projects.dir</span>
+      </div>
       <ScrollReveal>
+        <div className="p-6 sm:p-8 md:p-10">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
           Projects
         </p>
@@ -41,21 +50,21 @@ function Projects() {
             return (
               <div
                 key={section.key}
-                className="rounded-2xl border border-camel-600/50 bg-khaki-beige-900/60 p-4 dark:border-ebony-600 dark:bg-charcoal-brown-200/80"
+                className="border-2 border-camel-600/60 bg-khaki-beige-900/72 p-4 shadow-[5px_5px_0_rgba(53,28,8,0.55)] dark:border-ebony-600 dark:bg-charcoal-brown-200/85 dark:shadow-[5px_5px_0_rgba(13,14,10,0.65)]"
               >
                 <button
                   type="button"
                   onClick={() => toggleSection(section.key)}
                   aria-expanded={isOpen}
                   aria-controls={`projects-${section.key}`}
-                  className="flex w-full items-center justify-between rounded-xl px-2 py-2 text-left text-lg font-semibold text-dark-walnut-500 transition hover:bg-camel-700/30 dark:text-khaki-beige-900 dark:hover:bg-ebony-500/60"
+                  className="flex w-full items-center justify-between border-2 border-transparent px-2 py-2 text-left text-lg font-semibold text-dark-walnut-500 transition hover:border-camel-600/60 hover:bg-camel-700/30 dark:text-khaki-beige-900 dark:hover:border-ebony-600 dark:hover:bg-ebony-500/60"
                 >
                   <span>{section.title}</span>
                   <span className="text-sm font-medium">{isOpen ? 'Close' : 'Open'}</span>
                 </button>
 
                 {isOpen ? (
-                  <div id={`projects-${section.key}`} className="mt-4 grid gap-5 sm:grid-cols-2">
+                  <div id={`projects-${section.key}`} className="mt-4 space-y-4">
                     {sectionProjects.length > 0 ? (
                       sectionProjects.map((project) => (
                         <ProjectCard key={project.title} project={project} />
@@ -70,6 +79,7 @@ function Projects() {
               </div>
             );
           })}
+        </div>
         </div>
       </ScrollReveal>
     </section>

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 @import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -117,5 +118,107 @@
 
 	body {
 		@apply bg-khaki-beige-900 text-charcoal-brown-500 antialiased;
+		font-family: 'IBM Plex Mono', 'Courier New', monospace;
+		background-image:
+			linear-gradient(to right, rgb(87 80 61 / 0.18) 1px, transparent 1px),
+			linear-gradient(to bottom, rgb(87 80 61 / 0.18) 1px, transparent 1px),
+			radial-gradient(circle at 1px 1px, rgb(34 30 22 / 0.12) 0.8px, transparent 0);
+		background-size: 18px 18px, 18px 18px, 3px 3px;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: 'Chakra Petch', 'IBM Plex Mono', monospace;
+		letter-spacing: -0.02em;
+	}
+}
+
+@layer components {
+	.retro-window {
+		position: relative;
+		border: 2px solid rgb(53 28 8 / 0.75);
+		border-radius: 0;
+		background: linear-gradient(160deg, rgb(240 239 233 / 0.88), rgb(226 222 211 / 0.9));
+		box-shadow: 7px 7px 0 rgb(53 28 8 / 0.7);
+		overflow: hidden;
+	}
+
+	.retro-window::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		background: radial-gradient(circle, rgb(17 12 6 / 0.1) 0.6px, transparent 0.7px);
+		background-size: 3px 3px;
+		opacity: 0.25;
+	}
+
+	.dark .retro-window {
+		border-color: rgb(218 223 210 / 0.45);
+		background: linear-gradient(160deg, rgb(39 43 30 / 0.9), rgb(20 24 16 / 0.92));
+		box-shadow: 7px 7px 0 rgb(13 14 10 / 0.6);
+	}
+
+	.retro-window-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		padding: 0.55rem 0.85rem;
+		border-bottom: 2px solid rgb(53 28 8 / 0.55);
+		background: rgb(219 208 193 / 0.82);
+		font-size: 0.74rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+
+	.dark .retro-window-bar {
+		border-bottom-color: rgb(218 223 210 / 0.3);
+		background: rgb(39 43 30 / 0.95);
+	}
+
+	.retro-dots {
+		display: flex;
+		gap: 0.35rem;
+	}
+
+	.retro-dots span {
+		display: inline-block;
+		height: 0.56rem;
+		width: 0.56rem;
+		border: 1px solid rgb(53 28 8 / 0.75);
+		border-radius: 999px;
+		background: rgb(240 239 233 / 0.75);
+	}
+
+	.dark .retro-dots span {
+		border-color: rgb(218 223 210 / 0.7);
+		background: rgb(20 24 16 / 0.9);
+	}
+
+	.retro-button {
+		border: 2px solid rgb(53 28 8 / 0.75);
+		border-radius: 0;
+		box-shadow: 3px 3px 0 rgb(53 28 8 / 0.6);
+		transition: transform 180ms ease, box-shadow 180ms ease;
+	}
+
+	.retro-button:hover {
+		transform: translate(-1px, -1px);
+		box-shadow: 5px 5px 0 rgb(53 28 8 / 0.66);
+	}
+
+	.dark .retro-button {
+		border-color: rgb(218 223 210 / 0.8);
+		box-shadow: 3px 3px 0 rgb(13 14 10 / 0.7);
+	}
+
+	.dark .retro-button:hover {
+		box-shadow: 5px 5px 0 rgb(13 14 10 / 0.82);
 	}
 }
