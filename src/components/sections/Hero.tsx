@@ -109,8 +109,30 @@ function Hero() {
   const renderPanel = () => {
     if (activeView === 'hero') {
       return (
-        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
-          <div className="max-w-xl text-left">
+        <div className="grid items-center gap-8 grid-cols-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
+          <div className="flex justify-center lg:justify-end lg:col-start-2 lg:row-start-1">
+            <div className="flex max-w-sm flex-col items-center">
+              <div className="relative h-52 w-52 sm:h-60 sm:w-60 lg:h-72 lg:w-72">
+                <div className="absolute inset-0 bg-linear-to-br from-camel-700 via-dry-sage-alt-800 to-dark-walnut-500 opacity-85 blur-xl dark:from-ebony-600 dark:via-dusty-olive-600 dark:to-dark-walnut-300" />
+                <div className="relative h-full w-full overflow-hidden border-4 border-khaki-beige-900/80 shadow-lg dark:border-ebony-300/80">
+                  <img src={profileImage} alt="Profile portrait" className="h-full w-full object-cover" />
+                </div>
+              </div>
+              <div className="mt-4 flex flex-wrap justify-center gap-3">
+                <span className="retro-button inline-flex items-center bg-dry-sage-alt-800/70 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-dark-walnut-500 dark:bg-dusty-olive-600/70 dark:text-khaki-beige-900">
+                  Isle of Man
+                </span>
+                <span className="retro-button inline-flex items-center bg-dry-sage-alt-800/70 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-dark-walnut-500 dark:bg-dusty-olive-600/70 dark:text-khaki-beige-900">
+                  University of Lancashire
+                </span>
+                <span className="retro-button inline-flex items-center bg-dry-sage-alt-800/70 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-dark-walnut-500 dark:bg-dusty-olive-600/70 dark:text-khaki-beige-900">
+                  BSc Computer Science
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="max-w-xl text-left lg:col-start-1 lg:row-start-1">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
               Computer Scientist
             </p>
@@ -118,10 +140,14 @@ function Hero() {
               James
             </h1>
             <p className="mt-5 text-lg leading-relaxed text-saddle-brown-500 sm:text-xl dark:text-camel-900">
-              Building robust digital experiences and uncovering the stories hidden within data.
+              Aspiring Software Developer and Data Analyst from the Isle of Man.
             </p>
             <p className="mt-4 max-w-lg text-sm leading-7 text-saddle-brown-500 dark:text-camel-900">
-              Use the tabs above to switch between the rest of the portfolio panels without leaving this screen.
+              I’m a 21-year-old Computer Science student from the Isle of Man who loves building cross-platform apps and using data to uncover 
+              the stories behind real-world problems.
+            </p>
+            <p className="mt-3 max-w-lg text-sm leading-7 text-saddle-brown-500 dark:text-camel-900 font-semibold">
+              Use the tabs above to switch between the rest of the portfolio panels.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <button
@@ -138,15 +164,6 @@ function Hero() {
               >
                 Open projects
               </button>
-            </div>
-          </div>
-
-          <div className="flex justify-center lg:justify-end">
-            <div className="relative h-64 w-64 sm:h-72 sm:w-72 lg:h-96 lg:w-96">
-              <div className="absolute inset-0 bg-linear-to-br from-camel-700 via-dry-sage-alt-800 to-dark-walnut-500 opacity-85 blur-xl dark:from-ebony-600 dark:via-dusty-olive-600 dark:to-dark-walnut-300" />
-              <div className="relative h-full w-full overflow-hidden border-4 border-khaki-beige-900/80 shadow-lg dark:border-ebony-300/80">
-                <img src={profileImage} alt="Profile portrait" className="h-full w-full object-cover" />
-              </div>
             </div>
           </div>
         </div>
@@ -174,6 +191,9 @@ function Hero() {
           </div>
 
           <div className="min-w-0 space-y-5 border-2 border-camel-600/60 bg-khaki-beige-900/70 p-6 shadow-[5px_5px_0_rgba(53,28,8,0.55)] dark:border-ebony-600 dark:bg-charcoal-brown-200/85 dark:shadow-[5px_5px_0_rgba(13,14,10,0.65)]">
+            <h2 className="mb-1 text-3xl font-bold tracking-tight text-dark-walnut-500 sm:text-4xl dark:text-khaki-beige-900">
+              Skills
+            </h2>
             {skillGroups.map((group) => (
               <div key={group.title}>
                 <h3 className="mb-4 text-lg font-semibold text-dark-walnut-500 dark:text-khaki-beige-900">

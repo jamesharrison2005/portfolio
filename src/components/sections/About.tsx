@@ -69,14 +69,14 @@ function About() {
           </h2>
           <p className="max-w-xl wrap-break-word text-lg leading-8 text-saddle-brown-500 dark:text-camel-900">
              I am a highly motivated student in my final year at the University of Lancashire from the Isle of Man, 
-             pursuing a career as a Software developer. With over 5 years of experience coding using languages and frameworks
-              such as .Net, Java, Python and Flutter, React, Typescript and so on, I have developed strong problem-solving and programming skills.
+             pursuing a career in Computer Science. With over 5 years of experience creating and designing applications. I have developed strong problem-solving and programming skills.
                I thrive in team-based environments where I can collaborate with others to deliver the best possible 
                solution. I aim to master my technical ability and widen my knowledge in the ever-evolving different fields of 
                Computer Science.
           </p>
-        </div>
 
+        </div>
+        
         <div className="min-w-0 space-y-5 border-2 border-camel-600/60 bg-khaki-beige-900/70 p-6 shadow-[5px_5px_0_rgba(53,28,8,0.55)] dark:border-ebony-600 dark:bg-charcoal-brown-200/85 dark:shadow-[5px_5px_0_rgba(13,14,10,0.65)]">
           {skillGroups.map((group) => (
             <div key={group.title}>
