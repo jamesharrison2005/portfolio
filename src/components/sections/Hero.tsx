@@ -62,6 +62,7 @@ function Hero() {
   const [activeView, setActiveView] = useState<ViewKey>('hero');
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isPhoneView, setIsPhoneView] = useState(false);
+  const [isWindowMaximized, setIsWindowMaximized] = useState(false);
   const workspaceRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -104,6 +105,24 @@ function Hero() {
     setIsDarkMode(nextThemeIsDark);
     document.documentElement.classList.toggle('dark', nextThemeIsDark);
     localStorage.setItem('theme', nextThemeIsDark ? 'dark' : 'light');
+  };
+
+  const toggleWindowSize = () => {
+    setIsWindowMaximized((prev) => !prev);
+  };
+
+  const handleLeaveWebsite = () => {
+    const shouldLeave = window.confirm('Leave this website?');
+    if (!shouldLeave) {
+      return;
+    }
+
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+
+    window.location.replace('about:blank');
   };
 
   const renderPanel = () => {
@@ -310,16 +329,20 @@ function Hero() {
       />
 
       <motion.div
-        drag={!isPhoneView}
+        drag={!isPhoneView && !isWindowMaximized}
         dragConstraints={workspaceRef}
         dragElastic={0.08}
         dragMomentum={false}
-        className={`fixed inset-x-0 top-24 z-50 mx-auto w-[calc(100vw-1rem)] sm:top-28 sm:w-[calc(100vw-2rem)] lg:w-[min(1100px,calc(100vw-2rem))] ${
-          isPhoneView ? '' : 'cursor-grab active:cursor-grabbing'
+        className={`fixed z-50 mx-auto ${
+          isWindowMaximized
+            ? 'inset-x-0 top-[5.75rem] w-[calc(100vw-1rem)] sm:w-[calc(100vw-1.5rem)] lg:w-[calc(100vw-2rem)]'
+            : 'inset-x-0 top-24 w-[calc(100vw-1rem)] sm:top-28 sm:w-[calc(100vw-2rem)] lg:w-[min(1100px,calc(100vw-2rem))]'
+        } ${
+          isPhoneView || isWindowMaximized ? '' : 'cursor-grab active:cursor-grabbing'
         }`}
       >
         <div className="retro-window overflow-hidden">
-          <div className="flex items-end gap-0 border-b-2 border-dark-walnut-500/55 bg-khaki-beige-800 px-1 py-1 dark:border-khaki-beige-900/25 dark:bg-ebony-400 sm:px-2">
+          <div className="flex flex-wrap items-start gap-1 border-b-2 border-dark-walnut-500/55 bg-khaki-beige-800 px-1 py-1 dark:border-khaki-beige-900/25 dark:bg-ebony-400 sm:flex-nowrap sm:items-end sm:gap-0 sm:px-2">
             <div className="flex w-full flex-wrap items-end gap-1 sm:w-auto sm:flex-nowrap sm:gap-1">
               {viewTabs.map((tab) => (
                 <button
@@ -339,10 +362,42 @@ function Hero() {
                 </button>
               ))}
             </div>
+
+            <div className="ml-auto mr-0.5 flex w-full items-center justify-end gap-1 pt-1 sm:w-auto sm:pt-0 sm:self-center">
+              <button
+                type="button"
+                onClick={toggleWindowSize}
+                aria-label={isWindowMaximized ? 'Restore window size' : 'Fit window to page'}
+                title={isWindowMaximized ? 'Restore window size' : 'Fit window to page'}
+                className="retro-button inline-flex h-8 w-8 items-center justify-center bg-khaki-beige-900/80 text-dark-walnut-500 hover:bg-khaki-beige-900 dark:bg-ebony-500/70 dark:text-khaki-beige-900 dark:hover:bg-ebony-500"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                  {isWindowMaximized ? <path d="M7 7h10v10H7z" /> : <path d="M5 5h14v14H5z" />}
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={handleLeaveWebsite}
+                aria-label="Leave website"
+                title="Leave website"
+                className="retro-button inline-flex h-8 w-8 items-center justify-center bg-khaki-beige-900/80 text-dark-walnut-500 hover:bg-red-500/35 dark:bg-ebony-500/70 dark:text-khaki-beige-900 dark:hover:bg-red-400/35"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                  <path d="M6 6 18 18" />
+                  <path d="M18 6 6 18" />
+                </svg>
+              </button>
+            </div>
           </div>
 
           <div className="p-4 sm:p-5 md:p-8">
-            <div className="retro-window flex h-[calc(100vh-15rem)] min-h-80 flex-col overflow-y-auto overscroll-contain p-4 sm:h-[calc(100vh-16rem)] sm:p-5 md:h-[calc(100vh-17rem)] md:p-8">
+            <div
+              className={`retro-window flex min-h-80 flex-col overflow-y-auto overscroll-contain p-4 sm:p-5 md:p-8 ${
+                isWindowMaximized
+                  ? 'h-[calc(100vh-11rem)] sm:h-[calc(100vh-11.5rem)] md:h-[calc(100vh-12rem)]'
+                  : 'h-[calc(100vh-15rem)] sm:h-[calc(100vh-16rem)] md:h-[calc(100vh-17rem)]'
+              }`}
+            >
               {renderPanel()}
             </div>
           </div>
