@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import profileImage from '../../assets/portrait.png';
 import { projects } from '../../data/projects';
 import type { ProjectCategory } from '../../types/project';
@@ -52,7 +52,7 @@ const contacts: ContactLink[] = [
 ];
 
 const viewTabs: Array<{ key: ViewKey; label: string; suffix: string }> = [
-  { key: 'hero', label: 'Hero', suffix: 'sys' },
+  { key: 'hero', label: 'Main', suffix: 'sys' },
   { key: 'about', label: 'About', suffix: 'log' },
   { key: 'projects', label: 'Projects', suffix: 'dir' },
   { key: 'contact', label: 'Contact', suffix: 'exe' },
@@ -60,13 +60,23 @@ const viewTabs: Array<{ key: ViewKey; label: string; suffix: string }> = [
 
 function Hero() {
   const [activeView, setActiveView] = useState<ViewKey>('hero');
-  const [openSections, setOpenSections] = useState<Record<ProjectCategory, boolean>>({
-    'software-development': true,
-    'data-science': false,
-    other: false,
-  });
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isPhoneView, setIsPhoneView] = useState(false);
   const workspaceRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 639px)');
+    const updatePhoneView = (event: MediaQueryList | MediaQueryListEvent) => {
+      setIsPhoneView(event.matches);
+    };
+
+    updatePhoneView(mediaQuery);
+    mediaQuery.addEventListener('change', updatePhoneView);
+
+    return () => {
+      mediaQuery.removeEventListener('change', updatePhoneView);
+    };
+  }, []);
 
   const skillGroups = [
     {
@@ -85,13 +95,6 @@ function Hero() {
     { key: 'other', title: 'Other' },
   ];
 
-  const toggleSection = (key: ProjectCategory) => {
-    setOpenSections((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-  };
-
   const handleContactClick = () => {
     setActiveView('contact');
   };
@@ -106,8 +109,30 @@ function Hero() {
   const renderPanel = () => {
     if (activeView === 'hero') {
       return (
-        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
-          <div className="max-w-xl text-left">
+        <div className="grid items-center gap-8 grid-cols-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
+          <div className="flex justify-center lg:justify-end lg:col-start-2 lg:row-start-1">
+            <div className="flex max-w-sm flex-col items-center">
+              <div className="relative h-52 w-52 sm:h-60 sm:w-60 lg:h-72 lg:w-72">
+                <div className="absolute inset-0 bg-linear-to-br from-camel-700 via-dry-sage-alt-800 to-dark-walnut-500 opacity-85 blur-xl dark:from-ebony-600 dark:via-dusty-olive-600 dark:to-dark-walnut-300" />
+                <div className="relative h-full w-full overflow-hidden border-4 border-khaki-beige-900/80 shadow-lg dark:border-ebony-300/80">
+                  <img src={profileImage} alt="Profile portrait" className="h-full w-full object-cover" />
+                </div>
+              </div>
+              <div className="mt-4 flex flex-wrap justify-center gap-3">
+                <span className="retro-button inline-flex items-center bg-dry-sage-alt-800/70 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-dark-walnut-500 dark:bg-dusty-olive-600/70 dark:text-khaki-beige-900">
+                  Isle of Man
+                </span>
+                <span className="retro-button inline-flex items-center bg-dry-sage-alt-800/70 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-dark-walnut-500 dark:bg-dusty-olive-600/70 dark:text-khaki-beige-900">
+                  University of Lancashire
+                </span>
+                <span className="retro-button inline-flex items-center bg-dry-sage-alt-800/70 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-dark-walnut-500 dark:bg-dusty-olive-600/70 dark:text-khaki-beige-900">
+                  BSc Computer Science
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="max-w-xl text-left lg:col-start-1 lg:row-start-1">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
               Computer Scientist
             </p>
@@ -115,10 +140,14 @@ function Hero() {
               James
             </h1>
             <p className="mt-5 text-lg leading-relaxed text-saddle-brown-500 sm:text-xl dark:text-camel-900">
-              Building robust digital experiences and uncovering the stories hidden within data.
+              Aspiring Software Developer and Data Analyst from the Isle of Man.
             </p>
             <p className="mt-4 max-w-lg text-sm leading-7 text-saddle-brown-500 dark:text-camel-900">
-              Use the tabs above to switch between the rest of the portfolio panels without leaving this screen.
+              I’m a 21-year-old Computer Science student from the Isle of Man who loves building cross-platform apps and using data to uncover 
+              the stories behind real-world problems.
+            </p>
+            <p className="mt-3 max-w-lg text-sm leading-7 text-saddle-brown-500 dark:text-camel-900 font-semibold">
+              Use the tabs above to switch between the rest of the portfolio panels.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <button
@@ -137,22 +166,13 @@ function Hero() {
               </button>
             </div>
           </div>
-
-          <div className="flex justify-center lg:justify-end">
-            <div className="relative h-64 w-64 sm:h-72 sm:w-72 lg:h-96 lg:w-96">
-              <div className="absolute inset-0 bg-linear-to-br from-camel-700 via-dry-sage-alt-800 to-dark-walnut-500 opacity-85 blur-xl dark:from-ebony-600 dark:via-dusty-olive-600 dark:to-dark-walnut-300" />
-              <div className="relative h-full w-full overflow-hidden border-4 border-khaki-beige-900/80 shadow-lg dark:border-ebony-300/80">
-                <img src={profileImage} alt="Profile portrait" className="h-full w-full object-cover" />
-              </div>
-            </div>
-          </div>
         </div>
       );
     }
 
     if (activeView === 'about') {
       return (
-        <div className="grid gap-8 md:grid-cols-2 md:items-start">
+        <div className="space-y-6">
           <div className="min-w-0">
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
               About
@@ -160,7 +180,7 @@ function Hero() {
             <h2 className="mb-4 text-4xl font-bold tracking-tight text-dark-walnut-500 sm:text-5xl dark:text-khaki-beige-900">
               About Me
             </h2>
-            <p className="max-w-xl wrap-break-word text-lg leading-8 text-saddle-brown-500 dark:text-camel-900">
+            <p className="w-full max-w-none wrap-break-word text-lg leading-8 text-saddle-brown-500 dark:text-camel-900">
               I am a highly motivated student in my final year at the University of Lancashire from the Isle of Man,
               pursuing a career as a Software developer. With over 5 years of experience coding using languages and
               frameworks such as .Net, Java, Python and Flutter, React, Typescript and so on, I have developed strong
@@ -171,6 +191,9 @@ function Hero() {
           </div>
 
           <div className="min-w-0 space-y-5 border-2 border-camel-600/60 bg-khaki-beige-900/70 p-6 shadow-[5px_5px_0_rgba(53,28,8,0.55)] dark:border-ebony-600 dark:bg-charcoal-brown-200/85 dark:shadow-[5px_5px_0_rgba(13,14,10,0.65)]">
+            <h2 className="mb-1 text-3xl font-bold tracking-tight text-dark-walnut-500 sm:text-4xl dark:text-khaki-beige-900">
+              Skills
+            </h2>
             {skillGroups.map((group) => (
               <div key={group.title}>
                 <h3 className="mb-4 text-lg font-semibold text-dark-walnut-500 dark:text-khaki-beige-900">
@@ -205,43 +228,25 @@ function Hero() {
           <div className="space-y-5">
             {sectionTabs.map((section) => {
               const sectionProjects = projects.filter((project) => project.category === section.key);
-              const isOpen = openSections[section.key];
 
               return (
                 <div
                   key={section.key}
-                  className="border-2 border-camel-600/60 bg-khaki-beige-900/72 p-4 shadow-[5px_5px_0_rgba(53,28,8,0.55)] dark:border-ebony-600 dark:bg-charcoal-brown-200/85 dark:shadow-[5px_5px_0_rgba(13,14,10,0.65)]"
+                  className="px-0 py-1 sm:border-2 sm:border-camel-600/60 sm:bg-khaki-beige-900/72 sm:p-4 sm:shadow-[5px_5px_0_rgba(53,28,8,0.55)] dark:sm:border-ebony-600 dark:sm:bg-charcoal-brown-200/85 dark:sm:shadow-[5px_5px_0_rgba(13,14,10,0.65)]"
                 >
-                  <button
-                    type="button"
-                    onClick={() => toggleSection(section.key)}
-                    aria-expanded={isOpen}
-                    aria-controls={`projects-${section.key}`}
-                    className="flex w-full items-center justify-between border-2 border-transparent px-2 py-2 text-left text-lg font-semibold text-dark-walnut-500 transition hover:border-camel-600/60 hover:bg-camel-700/30 dark:text-khaki-beige-900 dark:hover:border-ebony-600 dark:hover:bg-ebony-500/60"
-                  >
-                    <span>{section.title}</span>
-                    <span
-                      className={`retro-button px-2.5 py-1 text-xs font-semibold tracking-widest ${
-                        isOpen
-                          ? 'border-red-800/70 bg-red-700/25 text-red-900 dark:border-red-500/70 dark:bg-red-500/25 dark:text-red-200'
-                          : 'border-emerald-800/70 bg-emerald-700/25 text-emerald-900 dark:border-emerald-500/70 dark:bg-emerald-500/25 dark:text-emerald-200'
-                      }`}
-                    >
-                      {isOpen ? 'CLOSE' : 'OPEN'}
-                    </span>
-                  </button>
+                  <h3 className="px-0 py-1 text-left text-lg font-semibold text-dark-walnut-500 sm:px-2 sm:py-2 dark:text-khaki-beige-900">
+                    {section.title}
+                  </h3>
 
-                  {isOpen ? (
-                    <div id={`projects-${section.key}`} className="mt-4 space-y-4">
-                      {sectionProjects.length > 0 ? (
-                        sectionProjects.map((project) => <ProjectCard key={project.title} project={project} />)
-                      ) : (
-                        <p className="rounded-xl border border-dashed border-camel-600/60 p-4 text-sm text-saddle-brown-500 dark:border-ebony-600 dark:text-camel-900">
-                          No projects added here yet.
-                        </p>
-                      )}
-                    </div>
-                  ) : null}
+                  <div className="mt-3 space-y-4">
+                    {sectionProjects.length > 0 ? (
+                      sectionProjects.map((project) => <ProjectCard key={project.title} project={project} />)
+                    ) : (
+                      <p className="rounded-xl border border-dashed border-camel-600/60 p-4 text-sm text-saddle-brown-500 dark:border-ebony-600 dark:text-camel-900">
+                        No projects added here yet.
+                      </p>
+                    )}
+                  </div>
                 </div>
               );
             })}
@@ -305,11 +310,13 @@ function Hero() {
       />
 
       <motion.div
-        drag
+        drag={!isPhoneView}
         dragConstraints={workspaceRef}
         dragElastic={0.08}
         dragMomentum={false}
-        className="fixed left-2 top-24 z-50 w-[calc(100vw-1rem)] cursor-grab active:cursor-grabbing sm:left-4 sm:top-28 sm:w-[calc(100vw-2rem)] lg:w-[min(1100px,calc(100vw-2rem))]"
+        className={`fixed inset-x-0 top-24 z-50 mx-auto w-[calc(100vw-1rem)] sm:top-28 sm:w-[calc(100vw-2rem)] lg:w-[min(1100px,calc(100vw-2rem))] ${
+          isPhoneView ? '' : 'cursor-grab active:cursor-grabbing'
+        }`}
       >
         <div className="retro-window overflow-hidden">
           <div className="flex items-end gap-0 border-b-2 border-dark-walnut-500/55 bg-khaki-beige-800 px-1 py-1 dark:border-khaki-beige-900/25 dark:bg-ebony-400 sm:px-2">
