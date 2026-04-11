@@ -1,0 +1,32 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="800" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f0ece2"/>
+      <stop offset="1" stop-color="#d6c9b1"/>
+    </linearGradient>
+    <linearGradient id="phone" x1="220" y1="150" x2="560" y2="650" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f6f5ef"/>
+      <stop offset="1" stop-color="#d8cfbd"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" rx="48" fill="url(#bg)"/>
+  <rect x="120" y="100" width="960" height="600" rx="40" fill="#f4f1e8" stroke="#b6ad90" stroke-width="6"/>
+
+  <rect x="220" y="150" width="340" height="500" rx="44" fill="url(#phone)" stroke="#8a7d5f" stroke-width="6"/>
+  <rect x="260" y="205" width="260" height="54" rx="16" fill="#333d29"/>
+  <rect x="260" y="285" width="260" height="130" rx="22" fill="#e2ded3"/>
+  <rect x="260" y="435" width="260" height="70" rx="22" fill="#c2c5aa"/>
+  <rect x="260" y="525" width="180" height="70" rx="22" fill="#a4ac86"/>
+
+  <rect x="650" y="180" width="320" height="78" rx="24" fill="#d3cebc"/>
+  <rect x="650" y="285" width="320" height="78" rx="24" fill="#c2c5aa"/>
+  <rect x="650" y="390" width="320" height="78" rx="24" fill="#b6bd9e"/>
+  <rect x="650" y="495" width="220" height="78" rx="24" fill="#a68a64"/>
+
+  <rect x="705" y="310" width="210" height="24" rx="12" fill="#f0efe9"/>
+  <circle cx="320" cy="350" r="38" fill="#656d4a"/>
+  <path d="M302 350L318 366L342 334" stroke="#f4f1e8" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M688 220H930" stroke="#7f4f24" stroke-width="14" stroke-linecap="round"/>
+  <path d="M688 325H895" stroke="#936639" stroke-width="14" stroke-linecap="round"/>
+  <path d="M688 430H922" stroke="#582f0e" stroke-width="14" stroke-linecap="round"/>
+</svg>
