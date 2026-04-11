@@ -104,7 +104,7 @@ function Hero() {
   const renderPanel = () => {
     if (activeView === 'hero') {
       return (
-        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
+        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
           <div className="max-w-xl text-left">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
               Computer Scientist
@@ -137,7 +137,7 @@ function Hero() {
           </div>
 
           <div className="flex justify-center lg:justify-end">
-            <div className="relative h-72 w-72 sm:h-80 sm:w-80 lg:h-96 lg:w-96">
+            <div className="relative h-64 w-64 sm:h-72 sm:w-72 lg:h-96 lg:w-96">
               <div className="absolute inset-0 bg-linear-to-br from-camel-700 via-dry-sage-alt-800 to-dark-walnut-500 opacity-85 blur-xl dark:from-ebony-600 dark:via-dusty-olive-600 dark:to-dark-walnut-300" />
               <div className="relative h-full w-full overflow-hidden border-4 border-khaki-beige-900/80 shadow-lg dark:border-ebony-300/80">
                 <img src={profileImage} alt="Profile portrait" className="h-full w-full object-cover" />
@@ -249,27 +249,27 @@ function Hero() {
     }
 
     return (
-      <div>
-        <p className="mb-6 text-3xl font-semibold text-dark-walnut-500 sm:text-4xl dark:text-khaki-beige-900">
+      <div className="mx-auto w-full max-w-4xl">
+        <p className="mb-6 text-center text-3xl font-semibold text-dark-walnut-500 sm:text-left sm:text-4xl dark:text-khaki-beige-900">
           Let&apos;s connect
         </p>
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {contacts.map((contact) => (
             <a
               key={contact.label}
               href={contact.href}
               target={contact.label === 'Email' ? undefined : '_blank'}
               rel={contact.label === 'Email' ? undefined : 'noreferrer'}
-              className="group retro-button flex items-center gap-4 bg-khaki-beige-800/85 p-4 transition duration-200 hover:border-dark-walnut-500 hover:bg-khaki-beige-700/95 dark:bg-charcoal-brown-300/90 dark:hover:border-khaki-beige-900 dark:hover:bg-ebony-500/70"
+              className="group retro-button flex w-full items-start gap-4 bg-khaki-beige-800/85 p-4 transition duration-200 hover:border-dark-walnut-500 hover:bg-khaki-beige-700/95 dark:bg-charcoal-brown-300/90 dark:hover:border-khaki-beige-900 dark:hover:bg-ebony-500/70"
             >
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-none border border-dark-walnut-500/30 bg-dark-walnut-500 text-khaki-beige-900 transition group-hover:scale-105 group-hover:bg-toffee-brown-500 dark:border-khaki-beige-900/30 dark:bg-khaki-beige-900 dark:text-dark-walnut-500">
                 {contact.icon}
               </div>
-              <div>
+              <div className="min-w-0 flex-1">
                 <p className="text-sm font-semibold text-dark-walnut-500 dark:text-khaki-beige-900">
                   {contact.label}
                 </p>
-                <p className="text-sm text-saddle-brown-500 transition group-hover:text-dark-walnut-500 dark:text-camel-900 dark:group-hover:text-khaki-beige-900">
+                <p className="wrap-break-word text-sm leading-6 text-saddle-brown-500 transition group-hover:text-dark-walnut-500 dark:text-camel-900 dark:group-hover:text-khaki-beige-900">
                   {contact.value}
                 </p>
               </div>
@@ -282,8 +282,8 @@ function Hero() {
 
   return (
     <section id="hero" className="flex min-h-full flex-col gap-4 overflow-hidden">
-      <div className="retro-window-bar px-4 py-3">
-        <span className="text-base font-medium tracking-tight text-dark-walnut-500 dark:text-khaki-beige-900">
+      <div className="retro-window-bar flex-col items-start gap-2 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4">
+        <span className="text-sm font-medium tracking-tight text-dark-walnut-500 sm:text-base dark:text-khaki-beige-900">
           James Harrison
         </span>
         <button
@@ -297,14 +297,14 @@ function Hero() {
       </div>
 
       <div className="retro-window overflow-hidden">
-        <div className="flex items-end gap-0 border-b-2 border-dark-walnut-500/55 bg-khaki-beige-800 px-2 py-1 dark:border-khaki-beige-900/25 dark:bg-ebony-400">
-          <div className="flex items-end gap-1">
+        <div className="flex items-end gap-0 border-b-2 border-dark-walnut-500/55 bg-khaki-beige-800 px-1 py-1 dark:border-khaki-beige-900/25 dark:bg-ebony-400 sm:px-2">
+          <div className="flex w-full flex-wrap items-end gap-1 sm:w-auto sm:flex-nowrap sm:gap-1">
             {viewTabs.map((tab) => (
               <button
                 key={tab.key}
                 type="button"
                 onClick={() => setActiveView(tab.key)}
-                className={`group flex items-center gap-2 border-l-2 border-r-2 border-t-2 px-3 py-2 text-sm font-semibold tracking-[0.18em] transition ${
+                className={`group flex min-w-[calc(50%-0.125rem)] items-center gap-2 border-l-2 border-r-2 border-t-2 px-2 py-2 text-xs font-semibold tracking-[0.16em] transition sm:min-w-0 sm:px-3 sm:text-sm sm:tracking-[0.18em] ${
                   activeView === tab.key
                     ? 'border-dark-walnut-500 border-t-dark-walnut-500 bg-dark-walnut-500 text-khaki-beige-900 dark:border-khaki-beige-900 dark:border-t-khaki-beige-900 dark:bg-khaki-beige-900 dark:text-dark-walnut-500'
                     : 'border-dark-walnut-500/30 border-t-dark-walnut-500/30 bg-khaki-beige-900/50 text-saddle-brown-500 hover:bg-khaki-beige-900/70 dark:border-khaki-beige-900/20 dark:border-t-khaki-beige-900/20 dark:bg-ebony-500/40 dark:text-khaki-beige-900 dark:hover:bg-ebony-500/60'
@@ -317,8 +317,8 @@ function Hero() {
           </div>
         </div>
 
-        <div className="p-5 sm:p-6 md:p-8">
-          <div className="retro-window flex min-h-0 flex-col overflow-hidden p-5 sm:p-6 md:p-8">
+        <div className="p-4 sm:p-5 md:p-8">
+          <div className="retro-window flex min-h-0 flex-col overflow-hidden p-4 sm:p-5 md:p-8">
             {renderPanel()}
           </div>
         </div>
