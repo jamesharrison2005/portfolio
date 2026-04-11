@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { projects } from '../../data/projects';
 import type { ProjectCategory } from '../../types/project';
 import ProjectCard from '../ui/ProjectCard';
 import ScrollReveal from '../ui/ScrollReveal';
 
 function Projects() {
+  const [isSectionOpen, setIsSectionOpen] = useState(true);
   const [openSections, setOpenSections] = useState<Record<ProjectCategory, boolean>>({
     'software-development': true,
     'data-science': false,
@@ -24,18 +25,40 @@ function Projects() {
     }));
   };
 
+  useEffect(() => {
+    const handleOpenSection = (event: Event) => {
+      const customEvent = event as CustomEvent<{ sectionId?: string }>;
+
+      if (customEvent.detail?.sectionId === 'projects') {
+        setIsSectionOpen(true);
+      }
+    };
+
+    window.addEventListener('open-section', handleOpenSection as EventListener);
+
+    return () => {
+      window.removeEventListener('open-section', handleOpenSection as EventListener);
+    };
+  }, []);
+
   return (
     <section id="projects" className="retro-window">
-      <div className="retro-window-bar">
-        <div className="retro-dots" aria-hidden="true">
-          <span />
-          <span />
-          <span />
+      <button
+        type="button"
+        onClick={() => setIsSectionOpen((prev) => !prev)}
+        aria-expanded={isSectionOpen}
+        aria-controls="projects-content"
+        className="retro-window-bar w-full text-left transition hover:bg-camel-800/80 dark:hover:bg-ebony-500/80"
+      >
+        <div className="flex items-center gap-2" aria-hidden="true">
+          <span className={`h-3.5 w-3.5 rounded-full border ${isSectionOpen ? 'border-red-800/80 bg-red-500/90 dark:border-red-300/80 dark:bg-red-400/90' : 'border-red-800/40 bg-red-500/30 dark:border-red-300/40 dark:bg-red-300/30'}`} />
+          <span className={`h-3.5 w-3.5 rounded-full border ${isSectionOpen ? 'border-emerald-800/80 bg-emerald-500/95 dark:border-emerald-300/80 dark:bg-emerald-400/95' : 'border-emerald-800/40 bg-emerald-500/30 dark:border-emerald-300/40 dark:bg-emerald-300/30'}`} />
         </div>
         <span>projects.dir</span>
-      </div>
+      </button>
+      {isSectionOpen ? (
       <ScrollReveal>
-        <div className="p-6 sm:p-8 md:p-10">
+        <div id="projects-content" className="p-6 sm:p-8 md:p-10">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
           Projects
         </p>
@@ -60,7 +83,15 @@ function Projects() {
                   className="flex w-full items-center justify-between border-2 border-transparent px-2 py-2 text-left text-lg font-semibold text-dark-walnut-500 transition hover:border-camel-600/60 hover:bg-camel-700/30 dark:text-khaki-beige-900 dark:hover:border-ebony-600 dark:hover:bg-ebony-500/60"
                 >
                   <span>{section.title}</span>
-                  <span className="text-sm font-medium">{isOpen ? 'Close' : 'Open'}</span>
+                  <span
+                    className={`retro-button px-2.5 py-1 text-xs font-semibold tracking-widest ${
+                      isOpen
+                        ? 'border-red-800/70 bg-red-700/25 text-red-900 dark:border-red-500/70 dark:bg-red-500/25 dark:text-red-200'
+                        : 'border-emerald-800/70 bg-emerald-700/25 text-emerald-900 dark:border-emerald-500/70 dark:bg-emerald-500/25 dark:text-emerald-200'
+                    }`}
+                  >
+                    {isOpen ? 'CLOSE' : 'OPEN'}
+                  </span>
                 </button>
 
                 {isOpen ? (
@@ -82,6 +113,7 @@ function Projects() {
         </div>
         </div>
       </ScrollReveal>
+      ) : null}
     </section>
   );
 }

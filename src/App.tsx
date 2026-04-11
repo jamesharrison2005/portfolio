@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Navbar from './components/layout/Navbar';
 import Hero from './components/sections/Hero';
 import About from './components/sections/About';
@@ -42,6 +43,24 @@ const contacts = [
 ];
 
 function App() {
+  const [isContactOpen, setIsContactOpen] = useState(true);
+
+  useEffect(() => {
+    const handleOpenSection = (event: Event) => {
+      const customEvent = event as CustomEvent<{ sectionId?: string }>;
+
+      if (customEvent.detail?.sectionId === 'contact') {
+        setIsContactOpen(true);
+      }
+    };
+
+    window.addEventListener('open-section', handleOpenSection as EventListener);
+
+    return () => {
+      window.removeEventListener('open-section', handleOpenSection as EventListener);
+    };
+  }, []);
+
   return (
     <div
       id="top"
@@ -53,16 +72,22 @@ function App() {
         <About />
         <Projects />
         <section id="contact" className="retro-window">
-          <div className="retro-window-bar">
-            <div className="retro-dots" aria-hidden="true">
-              <span />
-              <span />
-              <span />
+          <button
+            type="button"
+            onClick={() => setIsContactOpen((prev) => !prev)}
+            aria-expanded={isContactOpen}
+            aria-controls="contact-content"
+            className="retro-window-bar w-full text-left transition hover:bg-camel-800/80 dark:hover:bg-ebony-500/80"
+          >
+            <div className="flex items-center gap-2" aria-hidden="true">
+              <span className={`h-3.5 w-3.5 rounded-full border ${isContactOpen ? 'border-red-800/80 bg-red-500/90 dark:border-red-300/80 dark:bg-red-400/90' : 'border-red-800/40 bg-red-500/30 dark:border-red-300/40 dark:bg-red-300/30'}`} />
+              <span className={`h-3.5 w-3.5 rounded-full border ${isContactOpen ? 'border-emerald-800/80 bg-emerald-500/95 dark:border-emerald-300/80 dark:bg-emerald-400/95' : 'border-emerald-800/40 bg-emerald-500/30 dark:border-emerald-300/40 dark:bg-emerald-300/30'}`} />
             </div>
             <span>contact.exe</span>
-          </div>
+          </button>
+          {isContactOpen ? (
           <ScrollReveal>
-            <div className="p-6 sm:p-8">
+            <div id="contact-content" className="p-6 sm:p-8">
             <h2 className="mb-6 text-3xl font-semibold text-dark-walnut-500 sm:text-4xl dark:text-khaki-beige-900">
               Let&apos;s connect
             </h2>
@@ -91,6 +116,7 @@ function App() {
             </div>
             </div>
           </ScrollReveal>
+          ) : null}
         </section>
       </main>
     </div>
