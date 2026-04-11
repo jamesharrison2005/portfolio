@@ -17,17 +17,12 @@ function Hero() {
   return (
     <section id="hero" className="retro-window">
       <div className="retro-window-bar">
-        <div className="retro-dots" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
         <span>hero.sys</span>
       </div>
       <ScrollReveal>
         <div className="p-6 sm:p-8 md:p-10">
-          <div className="flex flex-col items-center gap-10 md:flex-row md:items-center md:justify-between">
-        <div className="max-w-xl text-center md:text-left">
+          <div className="flex flex-col items-start gap-10 md:flex-row md:items-start md:justify-between">
+        <div className="max-w-xl text-left">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
             Computer Scientist
           </p>
