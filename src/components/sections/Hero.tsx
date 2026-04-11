@@ -269,7 +269,7 @@ function Hero() {
                 <p className="text-sm font-semibold text-dark-walnut-500 dark:text-khaki-beige-900">
                   {contact.label}
                 </p>
-                <p className="wrap-break-word text-sm leading-6 text-saddle-brown-500 transition group-hover:text-dark-walnut-500 dark:text-camel-900 dark:group-hover:text-khaki-beige-900">
+                <p className="wrap-break-word text-xs leading-5 text-saddle-brown-500 transition group-hover:text-dark-walnut-500 sm:text-sm sm:leading-6 dark:text-camel-900 dark:group-hover:text-khaki-beige-900">
                   {contact.value}
                 </p>
               </div>
@@ -304,7 +304,7 @@ function Hero() {
                 key={tab.key}
                 type="button"
                 onClick={() => setActiveView(tab.key)}
-                className={`group flex min-w-[calc(50%-0.125rem)] items-center gap-2 border-l-2 border-r-2 border-t-2 px-2 py-2 text-xs font-semibold tracking-[0.16em] transition sm:min-w-0 sm:px-3 sm:text-sm sm:tracking-[0.18em] ${
+                className={`group flex min-w-[calc(50%-0.125rem)] items-center gap-2 border-l-2 border-r-2 border-t-2 px-2 py-2 text-[0.68rem] font-semibold tracking-[0.12em] transition sm:min-w-0 sm:px-3 sm:text-sm sm:tracking-[0.18em] ${
                   activeView === tab.key
                     ? 'border-dark-walnut-500 border-t-dark-walnut-500 bg-dark-walnut-500 text-khaki-beige-900 dark:border-khaki-beige-900 dark:border-t-khaki-beige-900 dark:bg-khaki-beige-900 dark:text-dark-walnut-500'
                     : 'border-dark-walnut-500/30 border-t-dark-walnut-500/30 bg-khaki-beige-900/50 text-saddle-brown-500 hover:bg-khaki-beige-900/70 dark:border-khaki-beige-900/20 dark:border-t-khaki-beige-900/20 dark:bg-ebony-500/40 dark:text-khaki-beige-900 dark:hover:bg-ebony-500/60'
