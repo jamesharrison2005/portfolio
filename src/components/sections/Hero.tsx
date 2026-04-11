@@ -2,6 +2,18 @@ import profileImage from '../../assets/portrait.png';
 import ScrollReveal from '../ui/ScrollReveal';
 
 function Hero() {
+  const handleContactClick = () => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    window.dispatchEvent(
+      new CustomEvent('open-section', {
+        detail: { sectionId: 'contact' },
+      }),
+    );
+  };
+
   return (
     <section id="hero" className="retro-window">
       <div className="retro-window-bar">
@@ -28,6 +40,7 @@ function Hero() {
           <div className="mt-8 flex justify-center md:justify-start">
             <a
               href="#contact"
+              onClick={handleContactClick}
               className="retro-button inline-flex items-center bg-dark-walnut-500 px-6 py-3 text-sm font-semibold text-khaki-beige-900 transition hover:bg-toffee-brown-500 dark:bg-khaki-beige-900 dark:text-dark-walnut-500 dark:hover:bg-camel-800"
             >
               Contact me
