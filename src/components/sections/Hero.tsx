@@ -377,7 +377,7 @@ function Hero() {
         style={{ x: windowX, y: windowY }}
         className={`fixed z-50 mx-auto ${
           isWindowMaximized
-            ? 'inset-x-0 top-[5.75rem] w-[calc(100vw-1rem)] sm:w-[calc(100vw-1.5rem)] lg:w-[calc(100vw-2rem)]'
+            ? 'inset-x-0 top-23 w-[calc(100vw-1rem)] sm:w-[calc(100vw-1.5rem)] lg:w-[calc(100vw-2rem)]'
             : 'inset-x-0 top-24 w-[calc(100vw-1rem)] sm:top-28 sm:w-[calc(100vw-2rem)] lg:w-[min(1100px,calc(100vw-2rem))]'
         } ${
           isPhoneView || isWindowMaximized ? '' : 'cursor-grab active:cursor-grabbing'
