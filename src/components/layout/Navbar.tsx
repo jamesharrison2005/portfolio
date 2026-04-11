@@ -9,6 +9,18 @@ const links = [
 function Navbar() {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  const handleNavClick = (href: string) => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    window.dispatchEvent(
+      new CustomEvent('open-section', {
+        detail: { sectionId: href.replace('#', '') },
+      }),
+    );
+  };
+
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     const prefersDark =
@@ -47,6 +59,7 @@ function Navbar() {
               <li key={link.href}>
                 <a
                   href={link.href}
+                  onClick={() => handleNavClick(link.href)}
                   className="retro-button inline-flex bg-khaki-beige-800 px-3 py-1.5 transition hover:bg-camel-700/70 hover:text-dark-walnut-500 dark:bg-charcoal-brown-300 dark:hover:bg-ebony-500/80 dark:hover:text-khaki-beige-900"
                 >
                   {link.label}

@@ -1,6 +1,25 @@
+import { useEffect, useState } from 'react';
 import ScrollReveal from '../ui/ScrollReveal';
 
 function About() {
+  const [isOpen, setIsOpen] = useState(true);
+
+  useEffect(() => {
+    const handleOpenSection = (event: Event) => {
+      const customEvent = event as CustomEvent<{ sectionId?: string }>;
+
+      if (customEvent.detail?.sectionId === 'about') {
+        setIsOpen(true);
+      }
+    };
+
+    window.addEventListener('open-section', handleOpenSection as EventListener);
+
+    return () => {
+      window.removeEventListener('open-section', handleOpenSection as EventListener);
+    };
+  }, []);
+
   const skillGroups = [
     {
       title: 'Software Development',
@@ -24,16 +43,22 @@ function About() {
 
   return (
     <section id="about" className="retro-window">
-      <div className="retro-window-bar">
-        <div className="retro-dots" aria-hidden="true">
-          <span />
-          <span />
-          <span />
+      <button
+        type="button"
+        onClick={() => setIsOpen((prev) => !prev)}
+        aria-expanded={isOpen}
+        aria-controls="about-content"
+        className="retro-window-bar w-full text-left transition hover:bg-camel-800/80 dark:hover:bg-ebony-500/80"
+      >
+        <div className="flex items-center gap-2" aria-hidden="true">
+          <span className={`h-3.5 w-3.5 rounded-full border ${isOpen ? 'border-red-800/80 bg-red-500/90 dark:border-red-300/80 dark:bg-red-400/90' : 'border-red-800/40 bg-red-500/30 dark:border-red-300/40 dark:bg-red-300/30'}`} />
+          <span className={`h-3.5 w-3.5 rounded-full border ${isOpen ? 'border-emerald-800/80 bg-emerald-500/95 dark:border-emerald-300/80 dark:bg-emerald-400/95' : 'border-emerald-800/40 bg-emerald-500/30 dark:border-emerald-300/40 dark:bg-emerald-300/30'}`} />
         </div>
         <span>about.log</span>
-      </div>
+      </button>
+      {isOpen ? (
       <ScrollReveal>
-        <div className="p-6 sm:p-8 md:p-10">
+        <div id="about-content" className="p-6 sm:p-8 md:p-10">
           <div className="grid gap-8 md:grid-cols-2 md:items-start">
         <div className="min-w-0">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
@@ -74,6 +99,7 @@ function About() {
           </div>
         </div>
       </ScrollReveal>
+      ) : null}
     </section>
   );
 }

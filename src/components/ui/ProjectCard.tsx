@@ -8,6 +8,7 @@ type ProjectCardProps = {
 
 function ProjectCard({ project }: ProjectCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const detailId = `${project.title.replace(/\s+/g, '-').toLowerCase()}-details`;
 
   const overview =
     project.description.length > 110
@@ -17,44 +18,46 @@ function ProjectCard({ project }: ProjectCardProps) {
   return (
     <ScrollReveal>
       <article className="retro-window">
-        <div className="retro-window-bar">
-          <div className="retro-dots" aria-hidden="true">
-            <span />
-            <span />
+        <button
+          type="button"
+          onClick={() => setIsExpanded((prev) => !prev)}
+          aria-expanded={isExpanded}
+          aria-controls={detailId}
+          className="retro-window-bar w-full text-left transition hover:bg-camel-800/80 dark:hover:bg-ebony-500/80"
+        >
+          <div className="flex items-center gap-2" aria-hidden="true">
+            <span
+              className={`h-3.5 w-3.5 rounded-full border transition ${
+                isExpanded
+                  ? 'border-red-800/80 bg-red-500/90 dark:border-red-300/80 dark:bg-red-400/90'
+                  : 'border-red-800/40 bg-red-500/30 dark:border-red-300/40 dark:bg-red-300/30'
+              }`}
+            />
+            <span
+              className={`h-3.5 w-3.5 rounded-full border transition ${
+                isExpanded
+                  ? 'border-emerald-800/80 bg-emerald-500/95 dark:border-emerald-300/80 dark:bg-emerald-400/95'
+                  : 'border-emerald-800/40 bg-emerald-500/30 dark:border-emerald-300/40 dark:bg-emerald-300/30'
+              }`}
+            />
           </div>
           <span>{project.title.replace(/\s+/g, '_').toLowerCase()}.html</span>
-          <button
-            type="button"
-            onClick={() => setIsExpanded((prev) => !prev)}
-            aria-expanded={isExpanded}
-            className={`retro-button px-2.5 py-1 text-xs font-semibold tracking-widest ${
-              isExpanded
-                ? 'border-red-800/70 bg-red-700/25 text-red-900 dark:border-red-500/70 dark:bg-red-500/25 dark:text-red-200'
-                : 'border-emerald-800/70 bg-emerald-700/25 text-emerald-900 dark:border-emerald-500/70 dark:bg-emerald-500/25 dark:text-emerald-200'
-            }`}
-          >
-            {isExpanded ? 'CLOSE' : 'OPEN'}
-          </button>
-        </div>
+          <span className="text-[0.68rem] tracking-wider text-dusty-olive-500 dark:text-dry-sage-alt-700">
+            {isExpanded ? 'OPEN' : 'CLOSED'}
+          </span>
+        </button>
         <div className="p-5 sm:p-6">
-          <button
-            type="button"
-            onClick={() => setIsExpanded((prev) => !prev)}
-            aria-expanded={isExpanded}
-            className="w-full border-2 border-transparent p-1 text-left transition hover:border-camel-600/60 dark:hover:border-ebony-600"
-          >
-            <div>
-              <h3 className="mb-2 text-xl font-semibold text-dark-walnut-500 dark:text-khaki-beige-900">
-                {project.title}
-              </h3>
-              <p className="leading-relaxed text-saddle-brown-500 dark:text-camel-900">
-                {overview}
-              </p>
-            </div>
-          </button>
+          <div>
+            <h3 className="mb-2 text-xl font-semibold text-dark-walnut-500 dark:text-khaki-beige-900">
+              {project.title}
+            </h3>
+            <p className="leading-relaxed text-saddle-brown-500 dark:text-camel-900">
+              {overview}
+            </p>
+          </div>
 
           {isExpanded ? (
-            <div className="mt-5 border-t border-camel-600/50 pt-5 dark:border-ebony-600">
+            <div id={detailId} className="mt-5 border-t border-camel-600/50 pt-5 dark:border-ebony-600">
               <p className="mb-5 leading-relaxed text-saddle-brown-500 dark:text-camel-900">
                 {project.description}
               </p>
