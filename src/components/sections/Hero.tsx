@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { useState, type ReactNode } from 'react';
 import profileImage from '../../assets/portrait.png';
 import { projects } from '../../data/projects';
@@ -281,8 +282,8 @@ function Hero() {
   };
 
   return (
-    <section id="hero" className="flex min-h-full flex-col gap-4 overflow-hidden">
-      <div className="retro-window-bar flex-col items-start gap-2 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4">
+    <section id="hero" className="relative flex min-h-screen flex-col gap-4 overflow-visible pt-20 sm:pt-24">
+      <div className="retro-window-bar fixed left-0 right-0 top-0 z-40 flex-col items-start gap-2 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4">
         <span className="text-sm font-medium tracking-tight text-dark-walnut-500 sm:text-base dark:text-khaki-beige-900">
           James Harrison
         </span>
@@ -296,33 +297,43 @@ function Hero() {
         </button>
       </div>
 
-      <div className="retro-window overflow-hidden">
-        <div className="flex items-end gap-0 border-b-2 border-dark-walnut-500/55 bg-khaki-beige-800 px-1 py-1 dark:border-khaki-beige-900/25 dark:bg-ebony-400 sm:px-2">
-          <div className="flex w-full flex-wrap items-end gap-1 sm:w-auto sm:flex-nowrap sm:gap-1">
-            {viewTabs.map((tab) => (
-              <button
-                key={tab.key}
-                type="button"
-                onClick={() => setActiveView(tab.key)}
-                className={`group flex min-w-[calc(50%-0.125rem)] items-center gap-2 border-l-2 border-r-2 border-t-2 px-2 py-2 text-[0.68rem] font-semibold tracking-[0.12em] transition sm:min-w-0 sm:px-3 sm:text-sm sm:tracking-[0.18em] ${
-                  activeView === tab.key
-                    ? 'border-dark-walnut-500 border-t-dark-walnut-500 bg-dark-walnut-500 text-khaki-beige-900 dark:border-khaki-beige-900 dark:border-t-khaki-beige-900 dark:bg-khaki-beige-900 dark:text-dark-walnut-500'
-                    : 'border-dark-walnut-500/30 border-t-dark-walnut-500/30 bg-khaki-beige-900/50 text-saddle-brown-500 hover:bg-khaki-beige-900/70 dark:border-khaki-beige-900/20 dark:border-t-khaki-beige-900/20 dark:bg-ebony-500/40 dark:text-khaki-beige-900 dark:hover:bg-ebony-500/60'
-                }`}
-              >
-                <span className="h-1.5 w-1.5 rounded-full bg-current" />
-                <span className="max-w-xs truncate">{tab.label}.{tab.suffix}</span>
-              </button>
-            ))}
+      <motion.div
+        drag
+        dragConstraints={{ top: 0 }}
+        dragElastic={0.08}
+        dragMomentum={false}
+        className="fixed left-2 top-24 z-50 w-[calc(100vw-1rem)] cursor-grab active:cursor-grabbing sm:left-4 sm:top-28 sm:w-[calc(100vw-2rem)] lg:w-[min(1100px,calc(100vw-2rem))]"
+      >
+        <div className="retro-window overflow-hidden">
+          <div className="flex items-end gap-0 border-b-2 border-dark-walnut-500/55 bg-khaki-beige-800 px-1 py-1 dark:border-khaki-beige-900/25 dark:bg-ebony-400 sm:px-2">
+            <div className="flex w-full flex-wrap items-end gap-1 sm:w-auto sm:flex-nowrap sm:gap-1">
+              {viewTabs.map((tab) => (
+                <button
+                  key={tab.key}
+                  type="button"
+                  onClick={() => setActiveView(tab.key)}
+                  className={`group flex min-w-[calc(50%-0.125rem)] items-center gap-2 border-l-2 border-r-2 border-t-2 px-2 py-2 text-[0.68rem] font-semibold tracking-[0.12em] transition sm:min-w-0 sm:px-3 sm:text-sm sm:tracking-[0.18em] ${
+                    activeView === tab.key
+                      ? 'border-dark-walnut-500 border-t-dark-walnut-500 bg-dark-walnut-500 text-khaki-beige-900 dark:border-khaki-beige-900 dark:border-t-khaki-beige-900 dark:bg-khaki-beige-900 dark:text-dark-walnut-500'
+                      : 'border-dark-walnut-500/30 border-t-dark-walnut-500/30 bg-khaki-beige-900/50 text-saddle-brown-500 hover:bg-khaki-beige-900/70 dark:border-khaki-beige-900/20 dark:border-t-khaki-beige-900/20 dark:bg-ebony-500/40 dark:text-khaki-beige-900 dark:hover:bg-ebony-500/60'
+                  }`}
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-current" />
+                  <span className="max-w-28 truncate sm:max-w-xs">
+                    {tab.label}.{tab.suffix}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className="p-4 sm:p-5 md:p-8">
-          <div className="retro-window flex min-h-0 flex-col overflow-hidden p-4 sm:p-5 md:p-8">
-            {renderPanel()}
+          <div className="p-4 sm:p-5 md:p-8">
+            <div className="retro-window flex min-h-0 flex-col overflow-hidden p-4 sm:p-5 md:p-8">
+              {renderPanel()}
+            </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
