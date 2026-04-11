@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useMotionValue } from 'framer-motion';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import profileImage from '../../assets/portrait.png';
 import { projects } from '../../data/projects';
@@ -64,6 +64,8 @@ function Hero() {
   const [isPhoneView, setIsPhoneView] = useState(false);
   const [isWindowMaximized, setIsWindowMaximized] = useState(false);
   const workspaceRef = useRef<HTMLDivElement>(null);
+  const windowX = useMotionValue(0);
+  const windowY = useMotionValue(0);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 639px)');
@@ -108,6 +110,9 @@ function Hero() {
   };
 
   const toggleWindowSize = () => {
+    // Reset drag offset so fullscreen always recenters the window.
+    windowX.set(0);
+    windowY.set(0);
     setIsWindowMaximized((prev) => !prev);
   };
 
@@ -333,6 +338,7 @@ function Hero() {
         dragConstraints={workspaceRef}
         dragElastic={0.08}
         dragMomentum={false}
+        style={{ x: windowX, y: windowY }}
         className={`fixed z-50 mx-auto ${
           isWindowMaximized
             ? 'inset-x-0 top-[5.75rem] w-[calc(100vw-1rem)] sm:w-[calc(100vw-1.5rem)] lg:w-[calc(100vw-2rem)]'
