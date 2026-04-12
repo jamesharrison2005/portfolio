@@ -59,8 +59,16 @@ const viewTabs: Array<{ key: ViewKey; label: string; suffix: string }> = [
   { key: 'contact', label: 'Contact', suffix: 'exe' },
 ];
 
+const viewUrls: Record<ViewKey, string> = {
+  hero: 'portfolio://james.local/home',
+  about: 'portfolio://james.local/about',
+  projects: 'portfolio://james.local/projects',
+  contact: 'portfolio://james.local/contact',
+};
+
 function Hero() {
   const [activeView, setActiveView] = useState<ViewKey>('hero');
+  const [addressValue, setAddressValue] = useState(viewUrls.hero);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isPhoneView, setIsPhoneView] = useState(false);
   const [isWindowMaximized, setIsWindowMaximized] = useState(false);
@@ -81,6 +89,10 @@ function Hero() {
       mediaQuery.removeEventListener('change', updatePhoneView);
     };
   }, []);
+
+  useEffect(() => {
+    setAddressValue(viewUrls[activeView]);
+  }, [activeView]);
 
   const skillGroups = [
     {
@@ -104,6 +116,44 @@ function Hero() {
   ];
 
   const personalActivities = ['Gym Training', 'Hiking', 'Walking My Dogs', 'Outdoor Walks', 'Travel', 'Photography'];
+
+  const profileData: Array<{ value: string; icon: ReactNode }> = [
+    {
+      value: 'Isle of Man',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+          <path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z" />
+          <circle cx="12" cy="10" r="2.6" />
+        </svg>
+      ),
+    },
+    {
+      value: 'University of Lancashire',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+          <path d="m3 9 9-5 9 5" />
+          <path d="M5 10v7" />
+          <path d="M9 10v7" />
+          <path d="M15 10v7" />
+          <path d="M19 10v7" />
+          <path d="M3 18h18" />
+        </svg>
+      ),
+    },
+    {
+      value: 'BSc Computer Science',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+          <path d="M7 4h10" />
+          <path d="M7 20h10" />
+          <path d="M8 4v16" />
+          <path d="M16 4v16" />
+          <path d="M8 9h8" />
+          <path d="M8 15h8" />
+        </svg>
+      ),
+    },
+  ];
 
   const handleContactClick = () => {
     setActiveView('contact');
@@ -137,33 +187,92 @@ function Hero() {
     window.location.replace('about:blank');
   };
 
+  const resolveAddressToView = (value: string): ViewKey | null => {
+    const cleanedValue = value.trim().toLowerCase();
+
+    if (!cleanedValue) {
+      return activeView;
+    }
+
+    if (cleanedValue.includes('home') || cleanedValue.includes('main') || cleanedValue.includes('hero')) {
+      return 'hero';
+    }
+
+    if (cleanedValue.includes('about') || cleanedValue.includes('bio')) {
+      return 'about';
+    }
+
+    if (cleanedValue.includes('project') || cleanedValue.includes('work') || cleanedValue.includes('portfolio')) {
+      return 'projects';
+    }
+
+    if (cleanedValue.includes('contact') || cleanedValue.includes('email') || cleanedValue.includes('linkedin')) {
+      return 'contact';
+    }
+
+    return null;
+  };
+
+  const handleAddressSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const nextView = resolveAddressToView(addressValue);
+
+    if (nextView) {
+      setActiveView(nextView);
+      return;
+    }
+
+    setAddressValue(viewUrls[activeView]);
+  };
+
   const renderPanel = () => {
     if (activeView === 'hero') {
       return (
-        <div className="grid items-center gap-8 grid-cols-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
-          <div className="flex justify-center lg:justify-end lg:col-start-2 lg:row-start-1">
-            <div className="flex max-w-sm flex-col items-center">
-              <div className="relative h-52 w-52 sm:h-60 sm:w-60 lg:h-72 lg:w-72">
-                <div className="absolute inset-0 bg-linear-to-br from-camel-700 via-dry-sage-alt-800 to-dark-walnut-500 opacity-85 blur-xl dark:from-ebony-600 dark:via-dusty-olive-600 dark:to-dark-walnut-300" />
-                <div className="relative h-full w-full overflow-hidden border-4 border-khaki-beige-900/80 shadow-lg dark:border-ebony-300/80">
-                  <img src={profileImage} alt="Profile portrait" className="h-full w-full object-cover" />
+        <div className={`mx-auto w-full ${isWindowMaximized ? 'max-w-6xl' : ''}`}>
+          <div
+            className={`grid grid-cols-1 items-center gap-8 ${
+              isWindowMaximized
+                ? 'lg:grid-cols-[minmax(0,1fr)_minmax(320px,360px)] lg:gap-10'
+                : 'lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]'
+            }`}
+          >
+            <div className={`flex justify-center lg:col-start-2 lg:row-start-1 ${isWindowMaximized ? 'lg:justify-center' : 'lg:justify-end'}`}>
+            <div className="w-full max-w-76 sm:max-w-88">
+              <div className="relative border-[3px] border-dark-walnut-500/80 bg-camel-700/70 p-2 dark:border-khaki-beige-700/70 dark:bg-charcoal-brown-400/80">
+                <div className="border-2 border-khaki-beige-500/90 bg-khaki-beige-900 p-2 dark:border-ebony-700/90 dark:bg-charcoal-brown-200">
+                  <div className="border border-toffee-brown-500/60 bg-khaki-beige-800 p-1 dark:border-khaki-beige-700/60 dark:bg-charcoal-brown-300">
+                    <div className="relative overflow-hidden border border-dark-walnut-500/50 bg-khaki-beige-900 dark:border-khaki-beige-700/70 dark:bg-charcoal-brown-200">
+                      <img
+                        src={profileImage}
+                        alt="Profile portrait"
+                        className="h-68 w-full object-cover object-top sm:h-78 lg:h-84 saturate-[0.92] contrast-[1.05]"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="mt-4 flex flex-wrap justify-center gap-3">
-                <span className="retro-button inline-flex items-center bg-dry-sage-alt-800/70 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-dark-walnut-500 dark:bg-dusty-olive-600/70 dark:text-khaki-beige-900">
-                  Isle of Man
-                </span>
-                <span className="retro-button inline-flex items-center bg-dry-sage-alt-800/70 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-dark-walnut-500 dark:bg-dusty-olive-600/70 dark:text-khaki-beige-900">
-                  University of Lancashire
-                </span>
-                <span className="retro-button inline-flex items-center bg-dry-sage-alt-800/70 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-dark-walnut-500 dark:bg-dusty-olive-600/70 dark:text-khaki-beige-900">
-                  BSc Computer Science
-                </span>
+
+              <div className="mt-4 border-[3px] border-dark-walnut-500/80 bg-khaki-beige-800/95 p-3 dark:border-khaki-beige-700/70 dark:bg-charcoal-brown-300/95">
+                <p className="border-b border-dark-walnut-500/35 pb-2 text-left text-xs font-semibold uppercase tracking-[0.18em] text-saddle-brown-500 dark:border-khaki-beige-700/45 dark:text-khaki-beige-900">
+                  Profile Data:
+                </p>
+                <ul className="mt-3 space-y-2.5">
+                  {profileData.map((item) => (
+                    <li
+                      key={item.value}
+                      className="flex items-center gap-2.5 text-left text-[0.7rem] font-semibold uppercase tracking-[0.11em] text-dark-walnut-500 sm:text-xs dark:text-khaki-beige-900"
+                    >
+                      <span className="shrink-0 text-saddle-brown-500 dark:text-camel-800">{item.icon}</span>
+                      <span>{item.value}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-          </div>
+            </div>
 
-          <div className="max-w-xl text-left lg:col-start-1 lg:row-start-1">
+            <div className={`text-left lg:col-start-1 lg:row-start-1 ${isWindowMaximized ? 'max-w-2xl' : 'max-w-xl'}`}>
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
               Computer Scientist
             </p>
@@ -196,6 +305,7 @@ function Hero() {
                 Open projects
               </button>
             </div>
+          </div>
           </div>
         </div>
       );
@@ -411,7 +521,7 @@ function Hero() {
                 onClick={toggleWindowSize}
                 aria-label={isWindowMaximized ? 'Restore window size' : 'Fit window to page'}
                 title={isWindowMaximized ? 'Restore window size' : 'Fit window to page'}
-                className="retro-button inline-flex h-8 w-8 items-center justify-center bg-khaki-beige-900/80 text-dark-walnut-500 hover:bg-khaki-beige-900 dark:bg-ebony-500/70 dark:text-khaki-beige-900 dark:hover:bg-ebony-500"
+                className="inline-flex h-8 w-8 items-center justify-center border-2 border-dark-walnut-500/70 bg-khaki-beige-900/80 text-dark-walnut-500 hover:bg-khaki-beige-900 dark:border-khaki-beige-900/70 dark:bg-ebony-500/70 dark:text-khaki-beige-900 dark:hover:bg-ebony-500"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
                   {isWindowMaximized ? <path d="M7 7h10v10H7z" /> : <path d="M5 5h14v14H5z" />}
@@ -422,7 +532,7 @@ function Hero() {
                 onClick={handleLeaveWebsite}
                 aria-label="Leave website"
                 title="Leave website"
-                className="retro-button inline-flex h-8 w-8 items-center justify-center bg-khaki-beige-900/80 text-dark-walnut-500 hover:bg-red-500/35 dark:bg-ebony-500/70 dark:text-khaki-beige-900 dark:hover:bg-red-400/35"
+                className="inline-flex h-8 w-8 items-center justify-center border-2 border-dark-walnut-500/70 bg-khaki-beige-900/80 text-dark-walnut-500 hover:bg-red-500/35 dark:border-khaki-beige-900/70 dark:bg-ebony-500/70 dark:text-khaki-beige-900 dark:hover:bg-red-400/35"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
                   <path d="M6 6 18 18" />
@@ -432,6 +542,32 @@ function Hero() {
             </div>
           </div>
 
+          <form
+            onSubmit={handleAddressSubmit}
+            className="flex items-center gap-2 border-b-2 border-dark-walnut-500/45 bg-khaki-beige-900/65 px-2 py-2 dark:border-khaki-beige-900/25 dark:bg-ebony-500/55"
+          >
+            <span className="shrink-0 text-saddle-brown-500 dark:text-khaki-beige-900" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.2-3.2" />
+              </svg>
+            </span>
+            <input
+              type="text"
+              value={addressValue}
+              onChange={(event) => setAddressValue(event.target.value)}
+              aria-label="Search or enter address"
+              placeholder="Search or enter address"
+              className="min-w-0 flex-1 border-2 border-dark-walnut-500/50 bg-khaki-beige-900 px-3 py-1.5 text-xs text-dark-walnut-500 outline-none placeholder:text-saddle-brown-500/80 focus:border-dark-walnut-500 dark:border-khaki-beige-900/45 dark:bg-charcoal-brown-200 dark:text-khaki-beige-900 dark:placeholder:text-camel-900/80 dark:focus:border-khaki-beige-900"
+            />
+            <button
+              type="submit"
+              className="shrink-0 border-2 border-dark-walnut-500/70 bg-khaki-beige-800 px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-saddle-brown-500 dark:border-khaki-beige-900/70 dark:bg-ebony-500 dark:text-khaki-beige-900"
+            >
+              Go
+            </button>
+          </form>
+
           <div className="p-4 sm:p-5 md:p-8">
             <div
               className={`retro-window flex min-h-80 flex-col overflow-y-auto overscroll-contain p-4 sm:p-5 md:p-8 ${
@@ -439,6 +575,7 @@ function Hero() {
                   ? 'h-[calc(100vh-11rem)] sm:h-[calc(100vh-11.5rem)] md:h-[calc(100vh-12rem)]'
                   : 'h-[calc(100vh-15rem)] sm:h-[calc(100vh-16rem)] md:h-[calc(100vh-17rem)]'
               }`}
+              style={{ boxShadow: 'none' }}
             >
               {renderPanel()}
             </div>
