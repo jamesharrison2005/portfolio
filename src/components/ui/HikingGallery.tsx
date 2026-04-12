@@ -26,14 +26,14 @@ const loopingImages = [...hikingImages, ...hikingImages];
 
 function HikingGallery() {
   return (
-    <div className="mt-4 overflow-hidden border-2 border-camel-600/60 bg-khaki-beige-900/55 py-4 dark:border-ebony-600 dark:bg-charcoal-brown-200/70">
+    <div className="hiking-gallery-frame mt-4 overflow-hidden border-2 border-camel-600/60 bg-khaki-beige-900/55 py-4 dark:border-ebony-600 dark:bg-charcoal-brown-200/70">
       <motion.div
         className="flex w-max gap-3"
         animate={{ x: ['0%', '-50%'] }}
         transition={{ duration: 40, ease: 'linear', repeat: Infinity }}
       >
         {loopingImages.map((image, index) => (
-          <div key={`${image.src}-${index}`} className="h-36 w-44 shrink-0 border-2 border-khaki-beige-800/80 bg-khaki-beige-900 dark:border-ebony-500/80 dark:bg-charcoal-brown-300 sm:h-40 sm:w-52">
+          <div key={`${image.src}-${index}`} className="hiking-gallery-tile h-36 w-44 shrink-0 border-2 border-khaki-beige-800/80 bg-khaki-beige-900 dark:border-ebony-500/80 dark:bg-charcoal-brown-300 sm:h-40 sm:w-52">
             <img src={image.src} alt={image.alt} className="h-full w-full object-cover" loading="lazy" />
           </div>
         ))}
