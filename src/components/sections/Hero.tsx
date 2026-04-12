@@ -70,6 +70,7 @@ function Hero() {
   const [activeView, setActiveView] = useState<ViewKey>('hero');
   const [addressValue, setAddressValue] = useState(viewUrls.hero);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isWin95Mode, setIsWin95Mode] = useState(false);
   const [isPhoneView, setIsPhoneView] = useState(false);
   const [isWindowMaximized, setIsWindowMaximized] = useState(false);
   const workspaceRef = useRef<HTMLDivElement>(null);
@@ -88,6 +89,18 @@ function Hero() {
     return () => {
       mediaQuery.removeEventListener('change', updatePhoneView);
     };
+  }, []);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    const savedWin95 = localStorage.getItem('win95-mode') === 'on';
+
+    setIsWin95Mode(savedWin95);
+    document.documentElement.classList.toggle('win95', savedWin95);
+
+    const shouldUseDarkTheme = savedTheme === 'dark' && !savedWin95;
+    setIsDarkMode(shouldUseDarkTheme);
+    document.documentElement.classList.toggle('dark', shouldUseDarkTheme);
   }, []);
 
   useEffect(() => {
@@ -161,9 +174,26 @@ function Hero() {
 
   const toggleTheme = () => {
     const nextThemeIsDark = !isDarkMode;
+    setIsWin95Mode(false);
+    document.documentElement.classList.remove('win95');
+    localStorage.setItem('win95-mode', 'off');
+
     setIsDarkMode(nextThemeIsDark);
     document.documentElement.classList.toggle('dark', nextThemeIsDark);
     localStorage.setItem('theme', nextThemeIsDark ? 'dark' : 'light');
+  };
+
+  const toggleWin95Mode = () => {
+    const nextWin95Mode = !isWin95Mode;
+    setIsWin95Mode(nextWin95Mode);
+    document.documentElement.classList.toggle('win95', nextWin95Mode);
+    localStorage.setItem('win95-mode', nextWin95Mode ? 'on' : 'off');
+
+    if (nextWin95Mode) {
+      setIsDarkMode(false);
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
   };
 
   const toggleWindowSize = () => {
@@ -284,7 +314,7 @@ function Hero() {
 
             <div className={`order-2 flex justify-center lg:col-start-2 lg:row-span-2 ${isWindowMaximized ? 'lg:justify-center' : 'lg:justify-end'}`}>
               <div className="w-full max-w-76 sm:max-w-88">
-                <div className="relative border-[3px] border-dark-walnut-500/80 bg-camel-700/70 p-2 dark:border-khaki-beige-700/70 dark:bg-charcoal-brown-400/80">
+                <div className="hero-headshot-frame relative border-[3px] border-dark-walnut-500/80 bg-camel-700/70 p-2 dark:border-khaki-beige-700/70 dark:bg-charcoal-brown-400/80">
                   <div className="border-2 border-khaki-beige-500/90 bg-khaki-beige-900 p-2 dark:border-ebony-700/90 dark:bg-charcoal-brown-200">
                     <div className="border border-toffee-brown-500/60 bg-khaki-beige-800 p-1 dark:border-khaki-beige-700/60 dark:bg-charcoal-brown-300">
                       <div className="relative overflow-hidden border border-dark-walnut-500/50 bg-khaki-beige-900 dark:border-khaki-beige-700/70 dark:bg-charcoal-brown-200">
@@ -298,7 +328,7 @@ function Hero() {
                   </div>
                 </div>
 
-                <div className="mt-4 border-[3px] border-dark-walnut-500/80 bg-khaki-beige-800/95 p-3 dark:border-khaki-beige-700/70 dark:bg-charcoal-brown-300/95">
+                <div className="hero-profile-data mt-4 border-[3px] border-dark-walnut-500/80 bg-khaki-beige-800/95 p-3 dark:border-khaki-beige-700/70 dark:bg-charcoal-brown-300/95">
                   <p className="border-b border-dark-walnut-500/35 pb-2 text-left text-xs font-semibold uppercase tracking-[0.18em] text-saddle-brown-500 dark:border-khaki-beige-700/45 dark:text-khaki-beige-900">
                     Profile Data:
                   </p>
@@ -374,7 +404,7 @@ function Hero() {
             </p>
           </div>
 
-          <div className="min-w-0 space-y-5 border-2 border-camel-600/60 bg-khaki-beige-900/70 p-6 shadow-[5px_5px_0_rgba(53,28,8,0.55)] dark:border-ebony-600 dark:bg-charcoal-brown-200/85 dark:shadow-[5px_5px_0_rgba(13,14,10,0.65)]">
+          <div className="skills-panel min-w-0 space-y-5 border-2 border-camel-600/60 bg-khaki-beige-900/70 p-6 shadow-[5px_5px_0_rgba(53,28,8,0.55)] dark:border-ebony-600 dark:bg-charcoal-brown-200/85 dark:shadow-[5px_5px_0_rgba(13,14,10,0.65)]">
             <h2 className="mb-1 text-3xl font-bold tracking-tight text-dark-walnut-500 sm:text-4xl dark:text-khaki-beige-900">
               Skills
             </h2>
@@ -387,7 +417,7 @@ function Hero() {
                   {group.skills.map((skill) => (
                     <span
                       key={`${group.title}-${skill}`}
-                      className="retro-button bg-camel-700/70 px-4 py-2 text-sm font-medium text-saddle-brown-500 transition hover:bg-camel-600/85 dark:bg-ebony-500 dark:text-khaki-beige-900 dark:hover:bg-ebony-400"
+                      className="skill-chip retro-button bg-camel-700/70 px-4 py-2 text-sm font-medium text-saddle-brown-500 transition hover:bg-camel-600/85 dark:bg-ebony-500 dark:text-khaki-beige-900 dark:hover:bg-ebony-400"
                     >
                       {skill}
                     </span>
@@ -499,17 +529,31 @@ function Hero() {
   return (
     <section id="hero" className="relative flex min-h-screen flex-col gap-4 overflow-visible pt-20 sm:pt-24">
       <div className="retro-window-bar fixed left-0 right-0 top-0 z-40 flex items-center justify-between gap-2 px-3 py-3 sm:px-4">
-        <span className="text-sm font-medium tracking-tight text-dark-walnut-500 sm:text-base dark:text-khaki-beige-900">
+        <span className="app-title-label text-sm font-medium tracking-tight text-white sm:text-base">
           James Harrison
         </span>
-        <button
-          type="button"
-          onClick={toggleTheme}
-          className="retro-button shrink-0 bg-khaki-beige-800 px-3 py-1.5 text-xs font-semibold tracking-wide text-saddle-brown-500 dark:border-dry-sage-alt-600 dark:bg-ebony-400 dark:text-khaki-beige-900 dark:hover:bg-ebony-500"
-          aria-label="Toggle color mode"
-        >
-          {isDarkMode ? 'Light mode' : 'Dark mode'}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={toggleWin95Mode}
+            className={`retro-button shrink-0 px-3 py-1.5 text-xs font-semibold tracking-wide transition ${
+              isWin95Mode
+                ? 'bg-dark-walnut-500 text-khaki-beige-900 hover:bg-toffee-brown-500 dark:bg-khaki-beige-900 dark:text-dark-walnut-500 dark:hover:bg-camel-800'
+                : 'bg-khaki-beige-800 text-saddle-brown-500 hover:bg-camel-700/70 dark:border-dry-sage-alt-600 dark:bg-ebony-400 dark:text-khaki-beige-900 dark:hover:bg-ebony-500'
+            }`}
+            aria-label="Toggle Windows 95 mode"
+          >
+            Win95 mode
+          </button>
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="retro-button shrink-0 bg-khaki-beige-800 px-3 py-1.5 text-xs font-semibold tracking-wide text-saddle-brown-500 dark:border-dry-sage-alt-600 dark:bg-ebony-400 dark:text-khaki-beige-900 dark:hover:bg-ebony-500"
+            aria-label="Toggle color mode"
+          >
+            {isDarkMode ? 'Light mode' : 'Dark mode'}
+          </button>
+        </div>
       </div>
 
       <div
