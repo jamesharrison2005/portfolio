@@ -17,7 +17,7 @@ function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <ScrollReveal>
-      <article className="retro-window">
+      <article className="retro-window" style={{ boxShadow: 'none' }}>
         <button
           type="button"
           onClick={() => setIsExpanded((prev) => !prev)}
@@ -25,33 +25,12 @@ function ProjectCard({ project }: ProjectCardProps) {
           aria-controls={detailId}
           className="retro-window-bar w-full justify-start! text-left transition hover:bg-camel-800/80 dark:hover:bg-ebony-500/80"
         >
-          <div className="flex w-full flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-3">
-            <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:justify-start" aria-hidden="true">
-              <div className="flex items-center gap-2">
-                <span
-                  className={`h-3.5 w-3.5 rounded-full border transition ${
-                    isExpanded
-                      ? 'border-red-800/80 bg-red-500/90 dark:border-red-300/80 dark:bg-red-400/90'
-                      : 'border-red-800/40 bg-red-500/30 dark:border-red-300/40 dark:bg-red-300/30'
-                  }`}
-                />
-                <span
-                  className={`h-3.5 w-3.5 rounded-full border transition ${
-                    isExpanded
-                      ? 'border-emerald-800/80 bg-emerald-500/95 dark:border-emerald-300/80 dark:bg-emerald-400/95'
-                      : 'border-emerald-800/40 bg-emerald-500/30 dark:border-emerald-300/40 dark:bg-emerald-300/30'
-                  }`}
-                />
-              </div>
-              <span className="text-[0.68rem] tracking-wider text-dusty-olive-500 sm:hidden dark:text-dry-sage-alt-700">
-                {isExpanded ? 'OPEN' : 'CLOSED'}
-              </span>
-            </div>
-            <span className="block w-full break-all text-[0.74rem] leading-5 tracking-[0.08em] sm:w-auto sm:break-normal sm:text-inherit sm:leading-normal sm:tracking-inherit">
+          <div className="flex w-full items-center gap-3" aria-hidden="true">
+            <span className="block min-w-0 flex-1 break-all text-[0.74rem] leading-5 tracking-[0.08em] sm:break-normal sm:text-inherit sm:leading-normal sm:tracking-inherit">
               {project.title.replace(/\s+/g, '_').toLowerCase()}.html
             </span>
-            <span className="hidden text-[0.68rem] tracking-wider text-dusty-olive-500 sm:inline dark:text-dry-sage-alt-700">
-              {isExpanded ? 'OPEN' : 'CLOSED'}
+            <span className="inline-flex h-6 min-w-6 shrink-0 items-center justify-center border-2 border-dark-walnut-500/60 bg-khaki-beige-900/70 px-1 text-[0.7rem] font-bold leading-none text-dark-walnut-500 dark:border-khaki-beige-900/55 dark:bg-ebony-500/60 dark:text-khaki-beige-900">
+              {isExpanded ? '-' : '+'}
             </span>
           </div>
         </button>
