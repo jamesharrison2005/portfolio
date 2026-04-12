@@ -194,6 +194,24 @@ function Hero() {
       return activeView;
     }
 
+    if (cleanedValue.includes('portfolio://james.local/')) {
+      if (cleanedValue.includes('/home') || cleanedValue.endsWith('/')) {
+        return 'hero';
+      }
+
+      if (cleanedValue.includes('/about')) {
+        return 'about';
+      }
+
+      if (cleanedValue.includes('/projects')) {
+        return 'projects';
+      }
+
+      if (cleanedValue.includes('/contact')) {
+        return 'contact';
+      }
+    }
+
     if (cleanedValue.includes('home') || cleanedValue.includes('main') || cleanedValue.includes('hero')) {
       return 'hero';
     }
@@ -206,16 +224,20 @@ function Hero() {
       return 'projects';
     }
 
-    if (cleanedValue.includes('contact') || cleanedValue.includes('email') || cleanedValue.includes('linkedin')) {
+    if (
+      cleanedValue.includes('contact') ||
+      cleanedValue.includes('contact page') ||
+      cleanedValue.includes('get in touch') ||
+      cleanedValue.includes('email') ||
+      cleanedValue.includes('linkedin')
+    ) {
       return 'contact';
     }
 
     return null;
   };
 
-  const handleAddressSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const navigateFromAddressBar = () => {
     const nextView = resolveAddressToView(addressValue);
 
     if (nextView) {
@@ -226,86 +248,103 @@ function Hero() {
     setAddressValue(viewUrls[activeView]);
   };
 
+  const handleAddressSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    navigateFromAddressBar();
+  };
+
+  const handleAddressKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key !== 'Enter') {
+      return;
+    }
+
+    event.preventDefault();
+    navigateFromAddressBar();
+  };
+
   const renderPanel = () => {
     if (activeView === 'hero') {
       return (
         <div className={`mx-auto w-full ${isWindowMaximized ? 'max-w-6xl' : ''}`}>
           <div
-            className={`grid grid-cols-1 items-center gap-8 ${
+            className={`grid grid-cols-1 gap-8 ${
               isWindowMaximized
                 ? 'lg:grid-cols-[minmax(0,1fr)_minmax(320px,360px)] lg:gap-10'
                 : 'lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]'
             }`}
           >
-            <div className={`flex justify-center lg:col-start-2 lg:row-start-1 ${isWindowMaximized ? 'lg:justify-center' : 'lg:justify-end'}`}>
-            <div className="w-full max-w-76 sm:max-w-88">
-              <div className="relative border-[3px] border-dark-walnut-500/80 bg-camel-700/70 p-2 dark:border-khaki-beige-700/70 dark:bg-charcoal-brown-400/80">
-                <div className="border-2 border-khaki-beige-500/90 bg-khaki-beige-900 p-2 dark:border-ebony-700/90 dark:bg-charcoal-brown-200">
-                  <div className="border border-toffee-brown-500/60 bg-khaki-beige-800 p-1 dark:border-khaki-beige-700/60 dark:bg-charcoal-brown-300">
-                    <div className="relative overflow-hidden border border-dark-walnut-500/50 bg-khaki-beige-900 dark:border-khaki-beige-700/70 dark:bg-charcoal-brown-200">
-                      <img
-                        src={profileImage}
-                        alt="Profile portrait"
-                        className="h-68 w-full object-cover object-top sm:h-78 lg:h-84 saturate-[0.92] contrast-[1.05]"
-                      />
+            <div className={`order-1 text-left ${isWindowMaximized ? 'max-w-2xl' : 'max-w-xl'} lg:col-start-1 lg:row-start-1`}>
+              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
+                Computer Scientist
+              </p>
+              <h1 className="text-5xl font-bold tracking-tight text-dark-walnut-500 sm:text-6xl lg:text-7xl dark:text-khaki-beige-900">
+                James
+              </h1>
+            </div>
+
+            <div className={`order-2 flex justify-center lg:col-start-2 lg:row-span-2 ${isWindowMaximized ? 'lg:justify-center' : 'lg:justify-end'}`}>
+              <div className="w-full max-w-76 sm:max-w-88">
+                <div className="relative border-[3px] border-dark-walnut-500/80 bg-camel-700/70 p-2 dark:border-khaki-beige-700/70 dark:bg-charcoal-brown-400/80">
+                  <div className="border-2 border-khaki-beige-500/90 bg-khaki-beige-900 p-2 dark:border-ebony-700/90 dark:bg-charcoal-brown-200">
+                    <div className="border border-toffee-brown-500/60 bg-khaki-beige-800 p-1 dark:border-khaki-beige-700/60 dark:bg-charcoal-brown-300">
+                      <div className="relative overflow-hidden border border-dark-walnut-500/50 bg-khaki-beige-900 dark:border-khaki-beige-700/70 dark:bg-charcoal-brown-200">
+                        <img
+                          src={profileImage}
+                          alt="Profile portrait"
+                          className="h-68 w-full object-cover object-top sm:h-78 lg:h-84 saturate-[0.92] contrast-[1.05]"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="mt-4 border-[3px] border-dark-walnut-500/80 bg-khaki-beige-800/95 p-3 dark:border-khaki-beige-700/70 dark:bg-charcoal-brown-300/95">
-                <p className="border-b border-dark-walnut-500/35 pb-2 text-left text-xs font-semibold uppercase tracking-[0.18em] text-saddle-brown-500 dark:border-khaki-beige-700/45 dark:text-khaki-beige-900">
-                  Profile Data:
-                </p>
-                <ul className="mt-3 space-y-2.5">
-                  {profileData.map((item) => (
-                    <li
-                      key={item.value}
-                      className="flex items-center gap-2.5 text-left text-[0.7rem] font-semibold uppercase tracking-[0.11em] text-dark-walnut-500 sm:text-xs dark:text-khaki-beige-900"
-                    >
-                      <span className="shrink-0 text-saddle-brown-500 dark:text-camel-800">{item.icon}</span>
-                      <span>{item.value}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-4 border-[3px] border-dark-walnut-500/80 bg-khaki-beige-800/95 p-3 dark:border-khaki-beige-700/70 dark:bg-charcoal-brown-300/95">
+                  <p className="border-b border-dark-walnut-500/35 pb-2 text-left text-xs font-semibold uppercase tracking-[0.18em] text-saddle-brown-500 dark:border-khaki-beige-700/45 dark:text-khaki-beige-900">
+                    Profile Data:
+                  </p>
+                  <ul className="mt-3 space-y-2.5">
+                    {profileData.map((item) => (
+                      <li
+                        key={item.value}
+                        className="flex items-center gap-2.5 text-left text-[0.7rem] font-semibold uppercase tracking-[0.11em] text-dark-walnut-500 sm:text-xs dark:text-khaki-beige-900"
+                      >
+                        <span className="shrink-0 text-saddle-brown-500 dark:text-camel-800">{item.icon}</span>
+                        <span>{item.value}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
-            </div>
 
-            <div className={`text-left lg:col-start-1 lg:row-start-1 ${isWindowMaximized ? 'max-w-2xl' : 'max-w-xl'}`}>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.16em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
-              Computer Scientist
-            </p>
-            <h1 className="text-5xl font-bold tracking-tight text-dark-walnut-500 sm:text-6xl lg:text-7xl dark:text-khaki-beige-900">
-              James
-            </h1>
-            <p className="mt-5 text-lg leading-relaxed text-saddle-brown-500 sm:text-xl dark:text-camel-900">
-              Aspiring Software Developer and Data Analyst from the Isle of Man.
-            </p>
-            <p className="mt-4 max-w-lg text-sm leading-7 text-saddle-brown-500 dark:text-camel-900">
-              I’m a 21-year-old Computer Science student from the Isle of Man who loves building cross-platform apps and using data to uncover 
-              the stories behind real-world problems.
-            </p>
-            <p className="mt-3 max-w-lg text-sm leading-7 text-saddle-brown-500 dark:text-camel-900 font-semibold">
-              Use the tabs above to switch between the rest of the portfolio panels.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button
-                type="button"
-                onClick={handleContactClick}
-                className="retro-button inline-flex items-center bg-dark-walnut-500 px-6 py-3 text-sm font-semibold text-khaki-beige-900 transition hover:bg-toffee-brown-500 dark:bg-khaki-beige-900 dark:text-dark-walnut-500 dark:hover:bg-camel-800"
-              >
-                Contact me
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveView('projects')}
-                className="retro-button inline-flex items-center bg-khaki-beige-800 px-6 py-3 text-sm font-semibold text-dark-walnut-500 transition hover:bg-camel-700/70 dark:bg-charcoal-brown-300 dark:text-khaki-beige-900 dark:hover:bg-ebony-500/80"
-              >
-                Open projects
-              </button>
+            <div className={`order-3 text-left ${isWindowMaximized ? 'max-w-2xl' : 'max-w-xl'} lg:col-start-1 lg:row-start-2`}>
+              <p className="text-lg leading-relaxed text-saddle-brown-500 sm:text-xl dark:text-camel-900">
+                Aspiring Software Developer and Data Analyst from the Isle of Man.
+              </p>
+              <p className="mt-4 max-w-lg text-sm leading-7 text-saddle-brown-500 dark:text-camel-900">
+                I’m a 21-year-old Computer Science student from the Isle of Man who loves building cross-platform apps and using data to uncover
+                the stories behind real-world problems.
+              </p>
+              <p className="mt-3 max-w-lg text-sm leading-7 font-semibold text-saddle-brown-500 dark:text-camel-900">
+                Use the tabs above to switch between the rest of the portfolio panels.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={handleContactClick}
+                  className="retro-button inline-flex items-center bg-dark-walnut-500 px-6 py-3 text-sm font-semibold text-khaki-beige-900 transition hover:bg-toffee-brown-500 dark:bg-khaki-beige-900 dark:text-dark-walnut-500 dark:hover:bg-camel-800"
+                >
+                  Contact me
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveView('projects')}
+                  className="retro-button inline-flex items-center bg-khaki-beige-800 px-6 py-3 text-sm font-semibold text-dark-walnut-500 transition hover:bg-camel-700/70 dark:bg-charcoal-brown-300 dark:text-khaki-beige-900 dark:hover:bg-ebony-500/80"
+                >
+                  Open projects
+                </button>
+              </div>
             </div>
-          </div>
           </div>
         </div>
       );
@@ -459,14 +498,14 @@ function Hero() {
 
   return (
     <section id="hero" className="relative flex min-h-screen flex-col gap-4 overflow-visible pt-20 sm:pt-24">
-      <div className="retro-window-bar fixed left-0 right-0 top-0 z-40 flex-col items-start gap-2 px-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-4">
+      <div className="retro-window-bar fixed left-0 right-0 top-0 z-40 flex items-center justify-between gap-2 px-3 py-3 sm:px-4">
         <span className="text-sm font-medium tracking-tight text-dark-walnut-500 sm:text-base dark:text-khaki-beige-900">
           James Harrison
         </span>
         <button
           type="button"
           onClick={toggleTheme}
-          className="retro-button bg-khaki-beige-800 px-3 py-1.5 text-xs font-semibold tracking-wide text-saddle-brown-500 dark:border-dry-sage-alt-600 dark:bg-ebony-400 dark:text-khaki-beige-900 dark:hover:bg-ebony-500"
+          className="retro-button shrink-0 bg-khaki-beige-800 px-3 py-1.5 text-xs font-semibold tracking-wide text-saddle-brown-500 dark:border-dry-sage-alt-600 dark:bg-ebony-400 dark:text-khaki-beige-900 dark:hover:bg-ebony-500"
           aria-label="Toggle color mode"
         >
           {isDarkMode ? 'Light mode' : 'Dark mode'}
@@ -494,20 +533,19 @@ function Hero() {
         }`}
       >
         <div className="retro-window overflow-hidden">
-          <div className="flex flex-wrap items-start gap-1 border-b-2 border-dark-walnut-500/55 bg-khaki-beige-800 px-1 py-1 dark:border-khaki-beige-900/25 dark:bg-ebony-400 sm:flex-nowrap sm:items-end sm:gap-0 sm:px-2">
-            <div className="flex w-full flex-wrap items-end gap-1 sm:w-auto sm:flex-nowrap sm:gap-1">
+          <div className="flex items-center gap-1 overflow-hidden border-b-2 border-dark-walnut-500/55 bg-khaki-beige-800 px-1 py-1 dark:border-khaki-beige-900/25 dark:bg-ebony-400 sm:px-2">
+            <div className="flex min-w-0 flex-1 items-stretch gap-1 overflow-x-auto overscroll-x-contain whitespace-nowrap sm:gap-1" style={{ scrollbarWidth: 'none' }}>
               {viewTabs.map((tab) => (
                 <button
                   key={tab.key}
                   type="button"
                   onClick={() => setActiveView(tab.key)}
-                  className={`group flex min-w-[calc(50%-0.125rem)] items-center gap-2 border-l-2 border-r-2 border-t-2 px-2 py-2 text-[0.68rem] font-semibold tracking-[0.12em] transition sm:min-w-0 sm:px-3 sm:text-sm sm:tracking-[0.18em] ${
+                  className={`group flex shrink-0 items-center gap-2 border-l-2 border-r-2 border-t-2 px-3 py-2 text-[0.68rem] font-semibold tracking-[0.12em] transition sm:px-3 sm:text-sm sm:tracking-[0.18em] ${
                     activeView === tab.key
                       ? 'border-dark-walnut-500 border-t-dark-walnut-500 bg-dark-walnut-500 text-khaki-beige-900 dark:border-khaki-beige-900 dark:border-t-khaki-beige-900 dark:bg-khaki-beige-900 dark:text-dark-walnut-500'
                       : 'border-dark-walnut-500/30 border-t-dark-walnut-500/30 bg-khaki-beige-900/50 text-saddle-brown-500 hover:bg-khaki-beige-900/70 dark:border-khaki-beige-900/20 dark:border-t-khaki-beige-900/20 dark:bg-ebony-500/40 dark:text-khaki-beige-900 dark:hover:bg-ebony-500/60'
                   }`}
                 >
-                  <span className="h-1.5 w-1.5 rounded-full bg-current" />
                   <span className="max-w-28 truncate sm:max-w-xs">
                     {tab.label}.{tab.suffix}
                   </span>
@@ -515,7 +553,7 @@ function Hero() {
               ))}
             </div>
 
-            <div className="ml-auto mr-0.5 flex w-full items-center justify-end gap-1 pt-1 sm:w-auto sm:pt-0 sm:self-center">
+            <div className="ml-auto mr-0.5 flex shrink-0 items-center justify-end gap-1">
               <button
                 type="button"
                 onClick={toggleWindowSize}
@@ -556,6 +594,7 @@ function Hero() {
               type="text"
               value={addressValue}
               onChange={(event) => setAddressValue(event.target.value)}
+              onKeyDown={handleAddressKeyDown}
               aria-label="Search or enter address"
               placeholder="Search or enter address"
               className="min-w-0 flex-1 border-2 border-dark-walnut-500/50 bg-khaki-beige-900 px-3 py-1.5 text-xs text-dark-walnut-500 outline-none placeholder:text-saddle-brown-500/80 focus:border-dark-walnut-500 dark:border-khaki-beige-900/45 dark:bg-charcoal-brown-200 dark:text-khaki-beige-900 dark:placeholder:text-camel-900/80 dark:focus:border-khaki-beige-900"
@@ -570,10 +609,10 @@ function Hero() {
 
           <div className="p-4 sm:p-5 md:p-8">
             <div
-              className={`retro-window flex min-h-80 flex-col overflow-y-auto overscroll-contain p-4 sm:p-5 md:p-8 ${
+              className={`retro-window flex min-h-80 flex-col overflow-y-auto overscroll-contain p-4 pb-24 sm:p-5 md:p-8 ${
                 isWindowMaximized
-                  ? 'h-[calc(100vh-11rem)] sm:h-[calc(100vh-11.5rem)] md:h-[calc(100vh-12rem)]'
-                  : 'h-[calc(100vh-15rem)] sm:h-[calc(100vh-16rem)] md:h-[calc(100vh-17rem)]'
+                  ? 'h-[calc(100dvh-11rem)] sm:h-[calc(100vh-11.5rem)] md:h-[calc(100vh-12rem)]'
+                  : 'h-[calc(100dvh-15rem)] sm:h-[calc(100vh-16rem)] md:h-[calc(100vh-17rem)]'
               }`}
               style={{ boxShadow: 'none' }}
             >
