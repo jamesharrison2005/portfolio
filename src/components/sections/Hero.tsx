@@ -69,11 +69,7 @@ const viewUrls: Record<ViewKey, string> = {
 function Hero() {
   const [activeView, setActiveView] = useState<ViewKey>('hero');
   const [addressValue, setAddressValue] = useState(viewUrls.hero);
-  const [openProjectSections, setOpenProjectSections] = useState<Record<ProjectCategory, boolean>>({
-    'software-development': true,
-    'data-science': false,
-    other: false,
-  });
+  const [activeProjectCategory, setActiveProjectCategory] = useState<ProjectCategory>('software-development');
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isWin95Mode, setIsWin95Mode] = useState(false);
   const [isPhoneView, setIsPhoneView] = useState(false);
@@ -133,14 +129,42 @@ function Hero() {
     { key: 'other', title: 'Other' },
   ];
 
-  const personalActivities = ['Gym Training', 'Hiking', 'Walking My Dogs', 'Outdoor Walks', 'Travel', 'Photography'];
+  const projectCategoryTabs: Array<{ key: ProjectCategory; title: string; icon: ReactNode }> = [
+    {
+      key: 'software-development',
+      title: 'Software',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+          <path d="M4 7.5h16v10H4z" />
+          <path d="M9 4.5h6" />
+        </svg>
+      ),
+    },
+    {
+      key: 'data-science',
+      title: 'Data Science',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+          <path d="M4 19h16" />
+          <path d="M6 16V9" />
+          <path d="M12 16V5" />
+          <path d="M18 16v-7" />
+        </svg>
+      ),
+    },
+    {
+      key: 'other',
+      title: 'Other',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+          <path d="M4 8h16v11H4z" />
+          <path d="M7 8V5h10v3" />
+        </svg>
+      ),
+    },
+  ];
 
-  const toggleProjectSection = (key: ProjectCategory) => {
-    setOpenProjectSections((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-  };
+  const personalActivities = ['Gym Training', 'Hiking', 'Walking My Dogs', 'Outdoor Walks', 'Travel', 'Photography'];
 
   const profileData: Array<{ value: string; icon: ReactNode }> = [
     {
@@ -468,6 +492,8 @@ function Hero() {
     }
 
     if (activeView === 'projects') {
+      const activeProjects = projects.filter((project) => project.category === activeProjectCategory);
+
       return (
         <div>
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.16em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
@@ -476,51 +502,14 @@ function Hero() {
           <h2 className="mb-8 text-3xl font-bold tracking-tight text-dark-walnut-500 sm:text-4xl dark:text-khaki-beige-900">
             Selected work
           </h2>
-          <div className="space-y-5">
-            {sectionTabs.map((section) => {
-              const sectionProjects = projects.filter((project) => project.category === section.key);
-              const isOpen = openProjectSections[section.key];
-
-              return (
-                <div
-                  key={section.key}
-                  className="project-tab-shell px-0 py-1 sm:border-2 sm:border-camel-600/60 sm:bg-khaki-beige-900/72 sm:p-4 sm:shadow-[5px_5px_0_rgba(53,28,8,0.55)] dark:sm:border-ebony-600 dark:sm:bg-charcoal-brown-200/85 dark:sm:shadow-[5px_5px_0_rgba(13,14,10,0.65)]"
-                >
-                  <button
-                    type="button"
-                    onClick={() => toggleProjectSection(section.key)}
-                    aria-expanded={isOpen}
-                    aria-controls={`projects-tab-${section.key}`}
-                    className="project-category-toggle flex w-full items-center justify-between px-0 py-1 text-left sm:px-2 sm:py-2"
-                  >
-                    <span className="text-lg font-semibold text-dark-walnut-500 dark:text-khaki-beige-900">
-                      {section.title}
-                    </span>
-                    <span
-                      className={`retro-button px-2.5 py-1 text-xs font-semibold tracking-widest ${
-                        isOpen
-                          ? 'border-red-800/70 bg-red-700/25 text-red-900 dark:border-red-500/70 dark:bg-red-500/25 dark:text-red-200'
-                          : 'border-emerald-800/70 bg-emerald-700/25 text-emerald-900 dark:border-emerald-500/70 dark:bg-emerald-500/25 dark:text-emerald-200'
-                      }`}
-                    >
-                      {isOpen ? 'CLOSE' : 'OPEN'}
-                    </span>
-                  </button>
-
-                  {isOpen ? (
-                    <div id={`projects-tab-${section.key}`} className="project-category-content mt-3 space-y-4">
-                      {sectionProjects.length > 0 ? (
-                        sectionProjects.map((project) => <ProjectCard key={project.title} project={project} />)
-                      ) : (
-                        <p className="rounded-xl border border-dashed border-camel-600/60 p-4 text-sm text-saddle-brown-500 dark:border-ebony-600 dark:text-camel-900">
-                          No projects added here yet.
-                        </p>
-                      )}
-                    </div>
-                  ) : null}
-                </div>
-              );
-            })}
+          <div id={`projects-category-${activeProjectCategory}`} className="project-bookmark-content mt-4 space-y-4" role="tabpanel">
+            {activeProjects.length > 0 ? (
+              activeProjects.map((project) => <ProjectCard key={project.title} project={project} />)
+            ) : (
+              <p className="rounded-xl border border-dashed border-camel-600/60 p-4 text-sm text-saddle-brown-500 dark:border-ebony-600 dark:text-camel-900">
+                No projects added here yet.
+              </p>
+            )}
           </div>
         </div>
       );
@@ -682,6 +671,33 @@ function Hero() {
               Go
             </button>
           </form>
+
+          {activeView === 'projects' ? (
+            <div className="project-bookmark-shell border-b-2 border-dark-walnut-500/45 px-2 py-2 dark:border-khaki-beige-900/25">
+              <div className="project-bookmark-bar" role="tablist" aria-label="Project categories">
+                {projectCategoryTabs.map((tab) => {
+                  const isActive = activeProjectCategory === tab.key;
+
+                  return (
+                    <button
+                      key={tab.key}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      aria-controls={`projects-category-${tab.key}`}
+                      onClick={() => setActiveProjectCategory(tab.key)}
+                      className={`project-bookmark-tab flex items-center gap-2 ${isActive ? 'project-bookmark-tab-active' : ''}`}
+                    >
+                      <span className="project-bookmark-icon" aria-hidden="true">
+                        {tab.icon}
+                      </span>
+                      <span className="max-w-28 truncate sm:max-w-none">{tab.title}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ) : null}
 
           <div className="p-4 sm:p-5 md:p-8">
             <div
