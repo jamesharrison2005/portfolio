@@ -5,6 +5,7 @@ export type Project = {
   image: string;
   title: string;
   description: string;
+  deepDive?: string[];
   tech: string[];
   githubUrl?: string;
   liveUrl?: string;

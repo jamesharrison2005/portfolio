@@ -69,6 +69,11 @@ const viewUrls: Record<ViewKey, string> = {
 function Hero() {
   const [activeView, setActiveView] = useState<ViewKey>('hero');
   const [addressValue, setAddressValue] = useState(viewUrls.hero);
+  const [openProjectSections, setOpenProjectSections] = useState<Record<ProjectCategory, boolean>>({
+    'software-development': true,
+    'data-science': false,
+    other: false,
+  });
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isWin95Mode, setIsWin95Mode] = useState(false);
   const [isPhoneView, setIsPhoneView] = useState(false);
@@ -129,6 +134,13 @@ function Hero() {
   ];
 
   const personalActivities = ['Gym Training', 'Hiking', 'Walking My Dogs', 'Outdoor Walks', 'Travel', 'Photography'];
+
+  const toggleProjectSection = (key: ProjectCategory) => {
+    setOpenProjectSections((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
 
   const profileData: Array<{ value: string; icon: ReactNode }> = [
     {
@@ -467,25 +479,45 @@ function Hero() {
           <div className="space-y-5">
             {sectionTabs.map((section) => {
               const sectionProjects = projects.filter((project) => project.category === section.key);
+              const isOpen = openProjectSections[section.key];
 
               return (
                 <div
                   key={section.key}
-                  className="px-0 py-1 sm:border-2 sm:border-camel-600/60 sm:bg-khaki-beige-900/72 sm:p-4 sm:shadow-[5px_5px_0_rgba(53,28,8,0.55)] dark:sm:border-ebony-600 dark:sm:bg-charcoal-brown-200/85 dark:sm:shadow-[5px_5px_0_rgba(13,14,10,0.65)]"
+                  className="project-tab-shell px-0 py-1 sm:border-2 sm:border-camel-600/60 sm:bg-khaki-beige-900/72 sm:p-4 sm:shadow-[5px_5px_0_rgba(53,28,8,0.55)] dark:sm:border-ebony-600 dark:sm:bg-charcoal-brown-200/85 dark:sm:shadow-[5px_5px_0_rgba(13,14,10,0.65)]"
                 >
-                  <h3 className="px-0 py-1 text-left text-lg font-semibold text-dark-walnut-500 sm:px-2 sm:py-2 dark:text-khaki-beige-900">
-                    {section.title}
-                  </h3>
+                  <button
+                    type="button"
+                    onClick={() => toggleProjectSection(section.key)}
+                    aria-expanded={isOpen}
+                    aria-controls={`projects-tab-${section.key}`}
+                    className="project-category-toggle flex w-full items-center justify-between px-0 py-1 text-left sm:px-2 sm:py-2"
+                  >
+                    <span className="text-lg font-semibold text-dark-walnut-500 dark:text-khaki-beige-900">
+                      {section.title}
+                    </span>
+                    <span
+                      className={`retro-button px-2.5 py-1 text-xs font-semibold tracking-widest ${
+                        isOpen
+                          ? 'border-red-800/70 bg-red-700/25 text-red-900 dark:border-red-500/70 dark:bg-red-500/25 dark:text-red-200'
+                          : 'border-emerald-800/70 bg-emerald-700/25 text-emerald-900 dark:border-emerald-500/70 dark:bg-emerald-500/25 dark:text-emerald-200'
+                      }`}
+                    >
+                      {isOpen ? 'CLOSE' : 'OPEN'}
+                    </span>
+                  </button>
 
-                  <div className="mt-3 space-y-4">
-                    {sectionProjects.length > 0 ? (
-                      sectionProjects.map((project) => <ProjectCard key={project.title} project={project} />)
-                    ) : (
-                      <p className="rounded-xl border border-dashed border-camel-600/60 p-4 text-sm text-saddle-brown-500 dark:border-ebony-600 dark:text-camel-900">
-                        No projects added here yet.
-                      </p>
-                    )}
-                  </div>
+                  {isOpen ? (
+                    <div id={`projects-tab-${section.key}`} className="project-category-content mt-3 space-y-4">
+                      {sectionProjects.length > 0 ? (
+                        sectionProjects.map((project) => <ProjectCard key={project.title} project={project} />)
+                      ) : (
+                        <p className="rounded-xl border border-dashed border-camel-600/60 p-4 text-sm text-saddle-brown-500 dark:border-ebony-600 dark:text-camel-900">
+                          No projects added here yet.
+                        </p>
+                      )}
+                    </div>
+                  ) : null}
                 </div>
               );
             })}
@@ -529,7 +561,7 @@ function Hero() {
   return (
     <section id="hero" className="relative flex min-h-screen flex-col gap-4 overflow-visible pt-20 sm:pt-24">
       <div className="retro-window-bar fixed left-0 right-0 top-0 z-40 flex items-center justify-between gap-2 px-3 py-3 sm:px-4">
-        <span className="app-title-label text-sm font-medium tracking-tight text-white sm:text-base">
+        <span className="app-title-label text-sm font-medium tracking-tight text-dark-walnut-500 dark:text-khaki-beige-900 sm:text-base">
           James Harrison
         </span>
         <div className="flex items-center gap-2">

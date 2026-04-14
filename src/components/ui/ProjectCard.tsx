@@ -1,5 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Project } from '../../types/project';
+import {
+  fetchGitHubRepoMeta,
+  type GitHubRepoMetaResult,
+} from '../../utils/githubRepoMeta';
 import ScrollReveal from './ScrollReveal';
 
 type ProjectCardProps = {
@@ -8,12 +12,46 @@ type ProjectCardProps = {
 
 function ProjectCard({ project }: ProjectCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [repoMeta, setRepoMeta] = useState<GitHubRepoMetaResult | null>(null);
+  const [isRepoMetaLoading, setIsRepoMetaLoading] = useState(false);
   const detailId = `${project.title.replace(/\s+/g, '-').toLowerCase()}-details`;
 
   const overview =
     project.description.length > 110
       ? `${project.description.slice(0, 110).trimEnd()}...`
       : project.description;
+
+  useEffect(() => {
+    let isMounted = true;
+
+    if (!isExpanded || !project.githubUrl || repoMeta) {
+      return () => {
+        isMounted = false;
+      };
+    }
+
+    setIsRepoMetaLoading(true);
+
+    fetchGitHubRepoMeta(project.githubUrl)
+      .then((meta) => {
+        if (!isMounted) {
+          return;
+        }
+
+        setRepoMeta(meta);
+      })
+      .finally(() => {
+        if (!isMounted) {
+          return;
+        }
+
+        setIsRepoMetaLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isExpanded, project.githubUrl, repoMeta]);
 
   return (
     <ScrollReveal>
@@ -45,10 +83,26 @@ function ProjectCard({ project }: ProjectCardProps) {
           </div>
 
           {isExpanded ? (
-            <div id={detailId} className="mt-5 border-t border-camel-600/50 pt-5 dark:border-ebony-600">
-              <p className="mb-5 leading-relaxed text-saddle-brown-500 dark:text-camel-900">
-                {project.description}
-              </p>
+            <div id={detailId} className="project-expanded-panel mt-5 border-t border-camel-600/50 pt-5 dark:border-ebony-600">
+              <div className="project-deep-dive mb-5 rounded-md border border-camel-600/55 bg-khaki-beige-900/55 p-4 dark:border-ebony-600 dark:bg-charcoal-brown-300/70">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.12em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
+                  Further Info
+                </p>
+                {project.deepDive && project.deepDive.length > 0 ? (
+                  <ul className="project-deep-dive-list space-y-2 text-sm leading-relaxed text-saddle-brown-500 dark:text-camel-900">
+                    {project.deepDive.map((point) => (
+                      <li key={`${project.title}-${point}`} className="flex items-start gap-2">
+                        <span aria-hidden="true" className="project-deep-dive-dot mt-[0.38rem] h-1.5 w-1.5 shrink-0 rounded-full bg-camel-600 dark:bg-dry-sage-700" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm leading-relaxed text-saddle-brown-500 dark:text-camel-900">
+                    Deeper implementation notes will be added soon.
+                  </p>
+                )}
+              </div>
 
               <div className="mb-6 flex flex-wrap gap-2">
                 {project.tech.map((tag) => (
@@ -60,6 +114,47 @@ function ProjectCard({ project }: ProjectCardProps) {
                   </span>
                 ))}
               </div>
+
+              {project.githubUrl ? (
+                <div className="project-repo-status mb-6 border border-camel-600/55 bg-khaki-beige-900/55 p-4 dark:border-ebony-600 dark:bg-charcoal-brown-300/70">
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.12em] text-dusty-olive-500 dark:text-dry-sage-alt-700">
+                    Repository Status
+                  </p>
+
+                  {isRepoMetaLoading ? (
+                    <p className="text-sm leading-relaxed text-saddle-brown-500 dark:text-camel-900">
+                      Loading live GitHub details...
+                    </p>
+                  ) : repoMeta?.status === 'ok' ? (
+                    <>
+                      <div className="mb-3 flex flex-wrap gap-2">
+                        <span className="project-repo-metric retro-button bg-camel-700/60 px-3 py-1 text-xs font-medium text-saddle-brown-500 dark:bg-ebony-500 dark:text-khaki-beige-900">
+                          Stars: {repoMeta.stars}
+                        </span>
+                        <span className="project-repo-metric retro-button bg-camel-700/60 px-3 py-1 text-xs font-medium text-saddle-brown-500 dark:bg-ebony-500 dark:text-khaki-beige-900">
+                          Forks: {repoMeta.forks}
+                        </span>
+                        <span className="project-repo-metric retro-button bg-camel-700/60 px-3 py-1 text-xs font-medium text-saddle-brown-500 dark:bg-ebony-500 dark:text-khaki-beige-900">
+                          Issues: {repoMeta.openIssues}
+                        </span>
+                        <span className="project-repo-metric retro-button bg-camel-700/60 px-3 py-1 text-xs font-medium text-saddle-brown-500 dark:bg-ebony-500 dark:text-khaki-beige-900">
+                          Language: {repoMeta.language}
+                        </span>
+                      </div>
+                      <p className="project-repo-date text-sm leading-relaxed text-saddle-brown-500 dark:text-camel-900">
+                        Last updated:{' '}
+                        {repoMeta.lastPushAt
+                          ? new Date(repoMeta.lastPushAt).toLocaleDateString()
+                          : 'Unknown'}
+                      </p>
+                    </>
+                  ) : (
+                    <p className="text-sm leading-relaxed text-saddle-brown-500 dark:text-camel-900">
+                      {repoMeta?.message ?? 'GitHub metadata is currently unavailable.'}
+                    </p>
+                  )}
+                </div>
+              ) : null}
 
               <div className="flex flex-wrap gap-3">
                 {project.liveUrl ? (
