@@ -439,6 +439,8 @@
 		gap: 0.35rem;
 		align-items: center;
 		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		overscroll-behavior-x: contain;
 		padding-bottom: 0;
 	}
 
@@ -457,6 +459,8 @@
 		box-shadow: none;
 		opacity: 0.9;
 		transition: background-color 160ms ease, color 160ms ease, opacity 160ms ease;
+		-webkit-tap-highlight-color: transparent;
+		touch-action: manipulation;
 	}
 
 	.project-bookmark-tab:hover {
@@ -527,6 +531,42 @@
 	.dark .project-bookmark-tab-active {
 		background: rgb(218 223 210 / 0.12);
 		color: #f0efe9;
+	}
+
+	@media (max-width: 639px), (hover: none) and (pointer: coarse) {
+		.project-bookmark-shell {
+			padding: 0.3rem 0.35rem 0.35rem;
+		}
+
+		.project-bookmark-bar {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 0.25rem;
+			overflow-x: hidden;
+		}
+
+		.project-bookmark-tab {
+			justify-content: center;
+			padding: 0.45rem 0.3rem;
+			font-size: 0.72rem;
+			opacity: 1;
+		}
+
+		.project-bookmark-tab:hover {
+			background: transparent;
+		}
+
+		.project-bookmark-tab-active {
+			background: rgb(88 47 14 / 0.94);
+		}
+
+		.dark .project-bookmark-tab-active {
+			background: rgb(218 223 210 / 0.12);
+		}
+
+		.project-bookmark-icon {
+			display: none;
+		}
 	}
 
 	html.win95 .project-bookmark-tab-active .project-bookmark-icon,
