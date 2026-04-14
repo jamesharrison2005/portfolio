@@ -425,6 +425,115 @@
 			3px 3px 0 rgb(72 72 72 / 0.58) !important;
 	}
 
+	.project-bookmark-shell {
+		border: 1px solid rgb(53 28 8 / 0.18);
+		background: linear-gradient(180deg, rgb(240 239 233 / 0.96), rgb(226 222 211 / 0.96));
+		box-shadow:
+			inset 1px 1px 0 rgb(255 255 255 / 0.55),
+			inset -1px -1px 0 rgb(53 28 8 / 0.12);
+		padding: 0.35rem 0.5rem 0.4rem;
+	}
+
+	.project-bookmark-bar {
+		display: flex;
+		gap: 0.35rem;
+		align-items: center;
+		overflow-x: auto;
+		padding-bottom: 0;
+	}
+
+	.project-bookmark-tab {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		border: 0;
+		border-radius: 0;
+		background: transparent;
+		color: #5b3717;
+		padding: 0.35rem 0.55rem;
+		font-size: 0.84rem;
+		font-weight: 600;
+		white-space: nowrap;
+		box-shadow: none;
+		opacity: 0.9;
+		transition: background-color 160ms ease, color 160ms ease, opacity 160ms ease;
+	}
+
+	.project-bookmark-tab:hover {
+		background: rgb(53 28 8 / 0.035);
+		opacity: 1;
+	}
+
+	.project-bookmark-tab-active {
+		background: rgb(88 47 14 / 0.94);
+		color: #f4efe7;
+		opacity: 1;
+	}
+
+	.project-bookmark-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 1rem;
+		height: 1rem;
+		flex: 0 0 auto;
+	}
+
+	.project-bookmark-content {
+		padding-top: 0.5rem;
+	}
+
+	html.win95 .project-bookmark-shell {
+		border: 1px solid #8a8a8a !important;
+		background: linear-gradient(180deg, #d2d2d2, #c1c1c1) !important;
+		box-shadow:
+			inset 1px 1px 0 #f8f8f8,
+			inset -1px -1px 0 #868686 !important;
+	}
+
+	html.win95 .project-bookmark-tab {
+		border: 0 !important;
+		background: transparent !important;
+		color: #1f1f1f !important;
+		box-shadow: none !important;
+	}
+
+	html.win95 .project-bookmark-tab:hover {
+		background: rgb(0 0 0 / 0.04) !important;
+	}
+
+	html.win95 .project-bookmark-tab-active {
+		background: #000080 !important;
+		color: #f4f7ff !important;
+		box-shadow: none !important;
+	}
+
+	.dark .project-bookmark-shell {
+		border: 1px solid rgb(218 223 210 / 0.16);
+		background: linear-gradient(180deg, rgb(39 43 30 / 0.92), rgb(20 24 16 / 0.94));
+		box-shadow:
+			inset 1px 1px 0 rgb(255 255 255 / 0.05),
+			inset -1px -1px 0 rgb(13 14 10 / 0.55);
+	}
+
+	.dark .project-bookmark-tab {
+		color: rgb(218 223 210 / 0.95);
+	}
+
+	.dark .project-bookmark-tab:hover {
+		background: rgb(255 255 255 / 0.035);
+	}
+
+	.dark .project-bookmark-tab-active {
+		background: rgb(218 223 210 / 0.12);
+		color: #f0efe9;
+	}
+
+	html.win95 .project-bookmark-tab-active .project-bookmark-icon,
+	html.win95 .project-bookmark-tab .project-bookmark-icon {
+		color: inherit !important;
+	}
+
 	html.win95 .project-expanded-panel {
 		border-top-color: #878787 !important;
 	}
